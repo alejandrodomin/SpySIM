@@ -10,7 +10,7 @@ public:
 
     virtual ~Actor();
 
-    virtual void DrawActor()=0;
+    virtual void DrawActor(wxPanel *panel)=0;
 
     bool moveLeft();
     bool moveRight();

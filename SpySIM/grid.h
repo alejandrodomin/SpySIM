@@ -2,7 +2,9 @@
 #define GRID_H
 
 #include "cell.h"
+
 #include <vector>
+#include <wx/radiobox.h>
 
 class Grid : public Cell{
     private:

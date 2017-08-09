@@ -165,7 +165,8 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
     sw.Start();
     start=true;
 
-
+    Player *bob = new Player();
+    bob->DrawActor(Panel1);
 }
 
 int i=0;

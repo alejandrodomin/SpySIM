@@ -22,6 +22,8 @@
 
 #include <math.h>
 
+#include "player.h"
+
 
 //(*Headers(SpySIMFrame)
 #include <wx/button.h>

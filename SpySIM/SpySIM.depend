@@ -1783,20 +1783,23 @@
 1524087341 /home/malek/Documents/Code_blocks/SpySIM/SpySIM/actor.h
 	"grid.h"
 
-1524102226 source:/home/fiu/SpySIM/SpySIM/actor.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/actor.cpp
 	"actor.h"
 
-1524100829 /home/fiu/SpySIM/SpySIM/actor.h
+1502294404 /home/fiu/SpySIM/SpySIM/actor.h
 	"grid.h"
 
-1524102381 /home/fiu/SpySIM/SpySIM/grid.h
+1502294337 /home/fiu/SpySIM/SpySIM/grid.h
 	"cell.h"
 	<vector>
+	<wx/radiobox.h>
 
-1524102381 /home/fiu/SpySIM/SpySIM/cell.h
-	"SpySIMMain.h"
+1502294370 /home/fiu/SpySIM/SpySIM/cell.h
+	<wx/gdicmn.h>
+	<wx/panel.h>
+	<wx/dcclient.h>
 
-1502294103 /home/fiu/SpySIM/SpySIM/SpySIMMain.h
+1502294183 /home/fiu/SpySIM/SpySIM/SpySIMMain.h
 	<wx/msgdlg.h>
 	"wx/wx.h"
 	"wx/sizer.h"
@@ -1806,6 +1809,7 @@
 	<tgmath.h>
 	<time.h>
 	<math.h>
+	"player.h"
 	<wx/button.h>
 	<wx/menu.h>
 	<wx/panel.h>
@@ -1814,27 +1818,39 @@
 	<wx/stattext.h>
 	<wx/radiobox.h>
 
-1524102381 source:/home/fiu/SpySIM/SpySIM/cell.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/cell.cpp
 	"cell.h"
 
-1524102555 source:/home/fiu/SpySIM/SpySIM/grid.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/grid.cpp
 	"grid.h"
 
-1502294103 source:/home/fiu/SpySIM/SpySIM/SpySIMApp.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/SpySIMApp.cpp
 	"SpySIMApp.h"
 	"SpySIMMain.h"
 	<wx/image.h>
 
-1502294103 /home/fiu/SpySIM/SpySIM/SpySIMApp.h
+1502294006 /home/fiu/SpySIM/SpySIM/SpySIMApp.h
 	<wx/app.h>
 
-1524102443 source:/home/fiu/SpySIM/SpySIM/SpySIMMain.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/SpySIMMain.cpp
 	"SpySIMMain.h"
 	"grid.h"
 	<wx/string.h>
 	<wx/intl.h>
 
-1502294194 source:/home/fiu/SpySIM/SpySIM/ai.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/ai.cpp
+	"ai.h"
 
-1502294194 source:/home/fiu/SpySIM/SpySIM/player.cpp
+1502294006 source:/home/fiu/SpySIM/SpySIM/player.cpp
+	"player.h"
+
+1502294006 /home/fiu/SpySIM/SpySIM/ai.h
+	"actor.h"
+	<wx/bitmap.h>
+	<wx/dcclient.h>
+
+1502294006 /home/fiu/SpySIM/SpySIM/player.h
+	"actor.h"
+	<wx/bitmap.h>
+	<wx/dcclient.h>
 
