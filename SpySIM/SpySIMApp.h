@@ -1,9 +1,9 @@
 /***************************************************************
  * Name:      SpySIMApp.h
  * Purpose:   Defines Application Class
- * Author:     ()
- * Created:   2018-02-08
- * Copyright:  ()
+ * Author:    Alejandro Dominguez (adomi120@fiu.edu)
+ * Created:   2018-03-31
+ * Copyright: Alejandro Dominguez ()
  * License:
  **************************************************************/
 
