@@ -11,6 +11,7 @@
 #include <wx/msgdlg.h>
 #include "wx/wx.h"
 #include "wx/sizer.h"
+#include <wx/event.h>
 #include <math.h>
 
 //(*InternalHeaders(SpySIMFrame)
@@ -112,6 +113,7 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnAbout);
     //*)
+    Panel1->Bind(wxEVT_CHAR_HOOK,&SpySIMFrame::KeyMove, this);
 }
 
 SpySIMFrame::~SpySIMFrame()
@@ -137,11 +139,11 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
     int selection = RadioBox1->GetSelection();
 
     if(selection == 0)
-        tile_size = panel_size.GetWidth() / (15 + panel_size.GetWidth()*0.05); // 15 *5
+        tile_size = panel_size.GetWidth() / (15 + panel_size.GetWidth()*0.025); // 15 *5
     else if(selection == 1)
-        tile_size = panel_size.GetWidth() / (10 + panel_size.GetWidth()*0.05); // 10 *5
+        tile_size = panel_size.GetWidth() / (10 + panel_size.GetWidth()*0.025); // 10 *5
     else if(selection == 2)
-        tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.05); // 5 *5
+        tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.025); // 5 *5
 
     Draw(selection);
 
@@ -156,20 +158,73 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
 
 void SpySIMFrame::Draw(int difficulty)
 {
-    wxSize panel_size = Panel1->GetClientSize();
-    wxPoint *center = new wxPoint(panel_size.GetWidth()/2,panel_size.GetHeight()/2);
-    wxPoint *bob = new wxPoint(*center);
-    bob->x += tile_size;
-    bob->y += tile_size;
+    wxClientDC dc(Panel1);
+    dc.Clear();
 
+    wxSize panel_size = Panel1->GetClientSize();
+    wxPoint *center = new wxPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
+    DrawIsoGrid(*center);
+
+    player = new wxPoint(*center);
+    player->x += tile_size / 2;
+    player->y -= tile_size / 4;
+    dc.DrawCircle(*player, 1);
+}
+
+void SpySIMFrame::DrawIsoGrid(wxPoint& point)
+{
+    wxClientDC dc(Panel1);
+    dc.Clear();
+
+    wxPoint *center = new wxPoint(point);
+    DrawIsoRow(*center, RadioBox1->GetSelection());
+
+    wxPoint **array = new wxPoint*[5];
+
+    for(int i = 0; i < 5; i++){ // define a max number or rows
+        array[i] = new wxPoint(*center);    // based on the panel width
+        array[i]->x += (tile_size * 0.86602540378443864676372317075294) * (i + 1);
+        array[i]->y -= (tile_size * 0.5) * (i + 1);
+
+        DrawIsoRow(*array[i], RadioBox1->GetSelection());
+    }
+}
+
+void SpySIMFrame::DrawIsoRow(wxPoint& point, int difficulty)
+{
+    wxPoint *center = new wxPoint(point);
     DrawIsoSquare(*center);
-    DrawIsoSquare(*bob);
+
+    num_tiles = 0;
+    if(difficulty == 0)
+        num_tiles = 15;
+    else if(difficulty == 1)
+        num_tiles = 10;
+    else if(difficulty == 2)
+        num_tiles = 5;
+
+    wxPoint **array = new wxPoint*[num_tiles];
+
+    for(int i = 0; i < num_tiles; i++){ // define a max number or rows
+        array[i] = new wxPoint(*center);    // based on the panel width
+        array[i]->x += tile_size * (i+1);
+
+        DrawIsoSquare(*array[i]);
+    }
+
+    if(center != NULL){
+        delete center;
+        center = NULL;
+    }
+    if(array != NULL){
+        delete [] array;
+        array = NULL;
+    }
 }
 
 void SpySIMFrame::DrawIsoSquare(wxPoint& point)
 {
     wxClientDC dc(Panel1);
-    dc.Clear();
     dc.SetBrush(*wxBLACK_BRUSH);
 
     wxSize panel_size = Panel1->GetClientSize();
@@ -190,4 +245,50 @@ void SpySIMFrame::DrawIsoSquare(wxPoint& point)
 
     dc.DrawLine(*slave,*center3);
     dc.DrawLine(*center2,*center3);
+
+    if(center != NULL){
+        delete center;
+        center = NULL;
+    }
+    if(slave != NULL){
+        delete slave;
+        slave = NULL;
+    }
+    if(center2 != NULL){
+        delete center2;
+        center2 = NULL;
+    }
+    if(center3 != NULL){
+        delete center3;
+        center3 = NULL;
+    }
+}
+
+void SpySIMFrame::KeyMove(wxKeyEvent& event)
+{
+    wxClientDC dc(Panel1);
+    
+    wxSize panel_size = Panel1->GetClientSize();
+    wxPoint *center = new wxPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
+    DrawIsoGrid(*center);
+
+    switch(event.GetKeyCode()){
+        case WXK_LEFT : case WXK_CONTROL_A:
+            player->x -= tile_size;
+            break;
+        case WXK_RIGHT : case WXK_CONTROL_D:
+            player->x += tile_size;
+            break;
+        case WXK_UP : case WXK_CONTROL_W:
+            player->x += tile_size;
+            player->y -= tile_size / 2;
+            break;
+        case WXK_DOWN : case WXK_CONTROL_S:
+            player->x -= tile_size;
+            player->y += tile_size / 2;
+            break;
+    }   
+
+    dc.SetBrush(*wxGREEN_BRUSH);
+    dc.DrawCircle(*player, 1);
 }

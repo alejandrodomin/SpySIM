@@ -36,7 +36,11 @@ class SpySIMFrame: public wxFrame
         void OnButton1Click(wxCommandEvent& event);
         //*)
         void Draw(int difficulty);
+        void DrawIsoGrid(wxPoint& point);
+        void DrawIsoRow(wxPoint& point, int difficulty);
         void DrawIsoSquare(wxPoint& point);
+
+        void KeyMove(wxKeyEvent& event);
 
 
         //(*Identifiers(SpySIMFrame)
@@ -54,7 +58,8 @@ class SpySIMFrame: public wxFrame
         static const long ID_STATUSBAR1;
         //*)
 
-        int tile_size;
+        int tile_size, num_tiles;
+        wxPoint *player;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;
