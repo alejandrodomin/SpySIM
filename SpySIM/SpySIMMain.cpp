@@ -12,6 +12,8 @@
 #include "wx/wx.h"
 #include "wx/sizer.h"
 #include <wx/event.h>
+#include <thread>
+
 #include <math.h>
 
 //(*InternalHeaders(SpySIMFrame)
@@ -146,7 +148,6 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
         tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.025); // 5 *5
 
     Draw(selection);
-
     // easy     75
     // medium   50
     // hard     25

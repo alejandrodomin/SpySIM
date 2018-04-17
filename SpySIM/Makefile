@@ -3,7 +3,7 @@ CC = g++
 INC = ./
 
 LFLAGS = $(shell wx-config --libs all)
-CFLAGS = $(shell wx-config --cxxflags)
+CFLAGS = $(shell wx-config --cxxflags) -std=c++11
 
 PROJ = SpySIM
 
