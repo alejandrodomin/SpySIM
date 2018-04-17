@@ -13,6 +13,9 @@
 #include "wx/sizer.h"
 #include <wx/event.h>
 #include <thread>
+#include <wx/stopwatch.h>
+#include <tgmath.h>
+#include <time.h>
 
 #include <math.h>
 
@@ -65,6 +68,7 @@ const long SpySIMFrame::ID_STATUSBAR1 = wxNewId();
 BEGIN_EVENT_TABLE(SpySIMFrame,wxFrame)
     //(*EventTable(SpySIMFrame)
     //*)
+    EVT_IDLE(SpySIMFrame::OnIdle)
 END_EVENT_TABLE()
 
 SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
@@ -78,21 +82,21 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
 
     Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
     SetClientSize(wxSize(534,397));
-    Button1 = new wxButton(this, ID_BUTTON1, _("Play"), wxPoint(432,344), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(0,0), wxSize(288,296), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer: "), wxPoint(312,72), wxSize(200,17), 0, _T("ID_STATICTEXT1"));
-    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxPoint(312,104), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Score: "), wxPoint(320,136), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("How to Play:"), wxPoint(320,168), wxSize(176,144), 0, _T("ID_STATICTEXT4"));
-    Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,328), wxSize(368,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
-    StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    Button1 = new wxButton(this, ID_BUTTON1, _("Play"), wxRealPoint(432,344), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    Panel1 = new wxPanel(this, ID_PANEL1, wxRealPoint(0,0), wxSize(288,296), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer: "), wxRealPoint(312,72), wxSize(72,17), 0, _T("ID_STATICTEXT1"));
+    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxRealPoint(312,104), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Score: "), wxRealPoint(320,136), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("How to Play:"), wxRealPoint(320,168), wxSize(176,144), 0, _T("ID_STATICTEXT4"));
+    Panel2 = new wxPanel(this, ID_PANEL2, wxRealPoint(0,328), wxSize(368,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
+    StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxRealPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     wxString __wxRadioBoxChoices_1[3] =
     {
     	_("Easy"),
     	_("Medium"),
     	_("Hard")
     };
-    RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxPoint(312,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+    RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxRealPoint(312,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -114,6 +118,7 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnRadioBox1Select);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnAbout);
+
     //*)
     Panel1->Bind(wxEVT_CHAR_HOOK,&SpySIMFrame::KeyMove, this);
 }
@@ -140,22 +145,31 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
     wxSize panel_size = Panel1->GetClientSize();
     int selection = RadioBox1->GetSelection();
 
-    if(selection == 0)
-        tile_size = panel_size.GetWidth() / (15 + panel_size.GetWidth()*0.025); // 15 *5
-    else if(selection == 1)
-        tile_size = panel_size.GetWidth() / (10 + panel_size.GetWidth()*0.025); // 10 *5
-    else if(selection == 2)
-        tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.025); // 5 *5
+    if(selection == 0){
+        tile_size = panel_size.GetWidth() / (15 + panel_size.GetWidth()*0.025);
+        call_horiz=15-1;}// 15 *5
+    else if(selection == 1){
+        tile_size = panel_size.GetWidth() / (10 + panel_size.GetWidth()*0.025);
+        call_horiz=10-1;} // 10 *5
+    else if(selection == 2){
+        tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.025);
+        call_horiz=5-1;} // 5 *5
 
     Draw(selection);
     // easy     75
     // medium   50
     // hard     25
 }
-
+wxStopWatch sw;
+bool start=false;
 void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
 {
+    sw.Start();
+    start=true;
+
+
 }
+
 
 void SpySIMFrame::Draw(int difficulty)
 {
@@ -163,37 +177,63 @@ void SpySIMFrame::Draw(int difficulty)
     dc.Clear();
 
     wxSize panel_size = Panel1->GetClientSize();
-    wxPoint *center = new wxPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
-    DrawIsoGrid(*center);
+    wxRealPoint *center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
+    wxRealPoint *center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
+    wxRealPoint *center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
 
-    player = new wxPoint(*center);
-    player->x += tile_size / 2;
+
+
+    DrawIsoGrid(*center);
+    DrawIsoGrid(*center2);
+    DrawIsoGrid(*center3);
+
+    player = new wxRealPoint(*center);
+    player->x += tile_size ;
     player->y -= tile_size / 4;
+
+    centers= new wxRealPoint[5*call_horiz];
+    int stepx=0;
+    int stepy=0;
+    for (int i=1; i<5-1;i++){
+        for (int j=1;j<call_horiz-1;j++){
+        centers[i+j-2].x=center->x+(tile_size*j)+stepx;
+        centers[i+j-2].y=center->y- (tile_size / 4)+stepy;
+        }
+        stepx+=tile_size/(1/cos(PI/6));
+        stepy-=tile_size / 2;
+    }
+
+
     dc.DrawCircle(*player, 1);
+
+
+
 }
 
-void SpySIMFrame::DrawIsoGrid(wxPoint& point)
+void SpySIMFrame::DrawIsoGrid(wxRealPoint& point)
 {
-    wxClientDC dc(Panel1);
-    dc.Clear();
 
-    wxPoint *center = new wxPoint(point);
+    wxClientDC dc(Panel1);
+    //dc.Clear();
+    wxRealPoint *center = new wxRealPoint(point);
     DrawIsoRow(*center, RadioBox1->GetSelection());
 
-    wxPoint **array = new wxPoint*[5];
+    wxRealPoint **array = new wxRealPoint*[5];
 
-    for(int i = 0; i < 5; i++){ // define a max number or rows
-        array[i] = new wxPoint(*center);    // based on the panel width
-        array[i]->x += (tile_size * 0.86602540378443864676372317075294) * (i + 1);
+    for(int i = 0; i < 4; i++){ // define a max number or rows
+        array[i] = new wxRealPoint(*center);    // based on the panel width
+        array[i]->x += (tile_size * cos(PI/6)) * (i + 1);
         array[i]->y -= (tile_size * 0.5) * (i + 1);
 
         DrawIsoRow(*array[i], RadioBox1->GetSelection());
     }
+
+
 }
 
-void SpySIMFrame::DrawIsoRow(wxPoint& point, int difficulty)
+void SpySIMFrame::DrawIsoRow(wxRealPoint& point, int difficulty)
 {
-    wxPoint *center = new wxPoint(point);
+    wxRealPoint *center = new wxRealPoint(point);
     DrawIsoSquare(*center);
 
     num_tiles = 0;
@@ -204,10 +244,10 @@ void SpySIMFrame::DrawIsoRow(wxPoint& point, int difficulty)
     else if(difficulty == 2)
         num_tiles = 5;
 
-    wxPoint **array = new wxPoint*[num_tiles];
+    wxRealPoint **array = new wxRealPoint*[num_tiles];
 
-    for(int i = 0; i < num_tiles; i++){ // define a max number or rows
-        array[i] = new wxPoint(*center);    // based on the panel width
+    for(int i = 0; i < num_tiles-1; i++){ // define a max number or rows
+        array[i] = new wxRealPoint(*center);    // based on the panel width
         array[i]->x += tile_size * (i+1);
 
         DrawIsoSquare(*array[i]);
@@ -223,26 +263,26 @@ void SpySIMFrame::DrawIsoRow(wxPoint& point, int difficulty)
     }
 }
 
-void SpySIMFrame::DrawIsoSquare(wxPoint& point)
+void SpySIMFrame::DrawIsoSquare(wxRealPoint& point)
 {
     wxClientDC dc(Panel1);
     dc.SetBrush(*wxBLACK_BRUSH);
 
     wxSize panel_size = Panel1->GetClientSize();
-    wxPoint *center = new wxPoint(point);
-    wxPoint *slave = new wxPoint(*center);
+    wxRealPoint *center = new wxRealPoint(point);
+    wxRealPoint *slave = new wxRealPoint(*center);
     slave->x += tile_size;
     dc.DrawLine(*center,*slave);
 
-    wxPoint *center2 = new wxPoint(*center);
+    wxRealPoint *center2 = new wxRealPoint(*center);
     center2->y -= tile_size * 0.5; // 0.5 is sin(30 degrees)
-    center2->x += tile_size * 0.86602540378443864676372317075294; // cosine of 30 degrees
+    center2->x += tile_size * cos(PI/6); // cosine of 30 degrees
 
     dc.DrawLine(*center,*center2);
 
-    wxPoint *center3 = new wxPoint(*slave);
+    wxRealPoint *center3 = new wxRealPoint(*slave);
     center3->y -= tile_size * 0.5; // 0.5 is sin(30 degrees)
-    center3->x += tile_size * 0.86602540378443864676372317075294; // cosine of 30 degrees
+    center3->x += tile_size * cos(PI/6); // cosine of 30 degrees
 
     dc.DrawLine(*slave,*center3);
     dc.DrawLine(*center2,*center3);
@@ -267,29 +307,84 @@ void SpySIMFrame::DrawIsoSquare(wxPoint& point)
 
 void SpySIMFrame::KeyMove(wxKeyEvent& event)
 {
+    if (start){
     wxClientDC dc(Panel1);
-    
+    dc.Clear();
+
     wxSize panel_size = Panel1->GetClientSize();
-    wxPoint *center = new wxPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
+    wxRealPoint *center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
+    wxRealPoint *center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
+    wxRealPoint *center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
+
     DrawIsoGrid(*center);
+    DrawIsoGrid(*center2);
+    DrawIsoGrid(*center3);
 
     switch(event.GetKeyCode()){
         case WXK_LEFT : case WXK_CONTROL_A:
+            if (call2>0){
             player->x -= tile_size;
+            call2--;
+            }
             break;
         case WXK_RIGHT : case WXK_CONTROL_D:
+            if (call2<call_horiz){
             player->x += tile_size;
+            call2++;
+            }
             break;
         case WXK_UP : case WXK_CONTROL_W:
-            player->x += tile_size;
+            if (call<4){
+            player->x += tile_size/(1/cos(PI/6));
             player->y -= tile_size / 2;
+            call++;
+            }
             break;
         case WXK_DOWN : case WXK_CONTROL_S:
-            player->x -= tile_size;
-            player->y += tile_size / 2;
+            if (call>0){
+            player->x -= tile_size/(1/cos(PI/6));
+            player->y += tile_size/2;
+            call--;
+            }
             break;
-    }   
+    }
 
     dc.SetBrush(*wxGREEN_BRUSH);
     dc.DrawCircle(*player, 1);
+    }
 }
+
+void SpySIMFrame::OnIdle(wxIdleEvent& event){
+    wxClientDC dc(Panel1);
+    if (start){
+    double timer = (double)sw.Time()/1000;
+    StaticText1->SetLabel(wxString::Format(wxT("Timer: %lf"),timer));
+    srand ( time(NULL) );
+    int Rand = rand() %(5*call_horiz);
+    dc.DrawCircle(centers[Rand], 1);
+    event.Skip();
+    }
+
+}
+
+int Score(double time){
+    int score;
+    if (time<= 30 ){
+        score=200;
+    }
+    else if (time<= 60 ){
+        score=100;
+    }
+    else if (time<= 90 ){
+        score=50;
+    }
+    else {
+        score=25;
+    }
+
+    return score;
+
+
+}
+
+

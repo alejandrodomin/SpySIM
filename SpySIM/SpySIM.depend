@@ -140,7 +140,7 @@
 	"wx/msgout.h"
 	<stddef.h>
 
-1520278626 /usr/include/wx-3.0/wx/string.h
+1485352691 /usr/include/wx-3.0/wx/string.h
 	"wx/defs.h"
 	<ctype.h>
 	<stdio.h>
@@ -1650,4 +1650,34 @@
 
 1485352693 /usr/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
+
+1523972974 source:/home/dru/Documents/SpySIM/SpySIM/SpySIMApp.cpp
+	"SpySIMApp.h"
+	"SpySIMMain.h"
+	<wx/image.h>
+
+1523972974 /home/dru/Documents/SpySIM/SpySIM/SpySIMApp.h
+	<wx/app.h>
+
+1523998706 /home/dru/Documents/SpySIM/SpySIM/SpySIMMain.h
+	<wx/button.h>
+	<wx/menu.h>
+	<wx/panel.h>
+	<wx/statusbr.h>
+	<wx/frame.h>
+	<wx/stattext.h>
+	<wx/radiobox.h>
+
+1523990617 source:/home/dru/Documents/SpySIM/SpySIM/SpySIMMain.cpp
+	"SpySIMMain.h"
+	<wx/msgdlg.h>
+	"wx/wx.h"
+	"wx/sizer.h"
+	<wx/event.h>
+	<thread>
+	<wx/stopwatch.h>
+	<tgmath.h>
+	<math.h>
+	<wx/string.h>
+	<wx/intl.h>
 

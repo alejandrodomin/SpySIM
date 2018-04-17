@@ -10,6 +10,8 @@
 #ifndef SPYSIMMAIN_H
 #define SPYSIMMAIN_H
 
+# define PI          3.141592653589793238462643383279502884L
+
 //(*Headers(SpySIMFrame)
 #include <wx/button.h>
 #include <wx/menu.h>
@@ -26,6 +28,7 @@ class SpySIMFrame: public wxFrame
 
         SpySIMFrame(wxWindow* parent,wxWindowID id = -1);
         virtual ~SpySIMFrame();
+        void OnIdle(wxIdleEvent& event);
 
     private:
 
@@ -34,11 +37,12 @@ class SpySIMFrame: public wxFrame
         void OnAbout(wxCommandEvent& event);
         void OnRadioBox1Select(wxCommandEvent& event);
         void OnButton1Click(wxCommandEvent& event);
+
         //*)
         void Draw(int difficulty);
-        void DrawIsoGrid(wxPoint& point);
-        void DrawIsoRow(wxPoint& point, int difficulty);
-        void DrawIsoSquare(wxPoint& point);
+        void DrawIsoGrid(wxRealPoint& point);
+        void DrawIsoRow(wxRealPoint& point, int difficulty);
+        void DrawIsoSquare(wxRealPoint& point);
 
         void KeyMove(wxKeyEvent& event);
 
@@ -58,8 +62,13 @@ class SpySIMFrame: public wxFrame
         static const long ID_STATUSBAR1;
         //*)
 
-        int tile_size, num_tiles;
-        wxPoint *player;
+        double tile_size;
+        int num_tiles;
+        int call=0;
+        int call2=0;
+        int call_horiz;
+        wxRealPoint *player;
+        wxRealPoint *centers;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;
