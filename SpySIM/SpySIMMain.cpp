@@ -149,7 +149,7 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
     center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
     center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
     center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
-    player = new wxRealPoint(*center);
+    player = new wxRealPoint(*center3);
     player->x += tile_size ;
     player->y -= tile_size / 4;
     Draw(selection);
@@ -188,21 +188,30 @@ void SpySIMFrame::Draw(int difficulty)
     dc.DrawCircle(*player, 1);
 
 
-
-    centers= new wxRealPoint[5*call_horiz];
+/*
+    centers= new wxRealPoint*[5];
     int stepx=0;
     int stepy=0;
-    for (int i=1; i<5-1;i++){
-        for (int j=1;j<call_horiz-1;j++){
-        centers[i+j-2].x=center->x+(tile_size*j)+stepx;
-        centers[i+j-2].y=center->y- (tile_size / 4)+stepy;
+    for (int i=1; i<5;i++){
+            centers [i-1]=new wxRealPoint[5];
+        for (int j=1;j<5;j++){
+                centers[i-1][j-1].x=center->x+(tile_size*j);
+                centers[i-1][j-1].y=center->y+(tile_size/4);
         }
         stepx+=tile_size/(1/cos(PI/6));
         stepy-=tile_size / 2;
     }
 
 
+/*
 
+        centers[i+j-2].x=center->x+(tile_size*j)+stepx;
+        centers[i+j-2].y=center->y- (tile_size / 4)+stepy;
+
+        stepx+=tile_size/(1/cos(PI/6));
+        stepy-=tile_size / 2;
+
+*/
 
 i=1;
 
@@ -210,6 +219,9 @@ i=1;
 
 void SpySIMFrame::KeyMove(wxKeyEvent& event)
 {
+    double yVert = tile_size / 2;
+    double yHoriz = tile_size/(1/cos(PI/6));
+
     if (start){
     wxClientDC dc(Panel1);
     dc.Clear();
@@ -232,15 +244,15 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
             break;
         case WXK_UP : case WXK_CONTROL_W:
             if (call<4){
-            player->x += tile_size/(1/cos(PI/6));
-            player->y -= tile_size / 2;
+            player->x += yHoriz;
+            player->y -= yVert;
             call++;
             }
             break;
         case WXK_DOWN : case WXK_CONTROL_S:
             if (call>0){
-            player->x -= tile_size/(1/cos(PI/6));
-            player->y += tile_size/2;
+            player->x -= yHoriz;
+            player->y += yVert;
             call--;
             }
             break;
@@ -258,7 +270,7 @@ void SpySIMFrame::OnIdle(wxIdleEvent& event){
     StaticText1->SetLabel(wxString::Format(wxT("Timer: %lf"),timer));
     srand ( time(NULL) );
     int Rand = rand() %(5*call_horiz);
-    dc.DrawCircle(centers[Rand], 1);
+    //dc.DrawCircle(centers[Rand][2], 1);
     event.Skip();
     }
 

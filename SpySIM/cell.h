@@ -5,12 +5,12 @@
 class Cell{
     private:
 
+
+
     protected:
     public:
-
-
-
-        void DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1,double tile_size);
+        wxRealPoint* loc;
+        wxRealPoint DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1,double tile_size);
 };
 
 #endif

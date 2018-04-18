@@ -83,7 +83,7 @@ class SpySIMFrame: public wxFrame
         int call2=0;
         int call_horiz;
         wxRealPoint *player;
-        wxRealPoint *centers;
+        wxRealPoint **centers;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;
