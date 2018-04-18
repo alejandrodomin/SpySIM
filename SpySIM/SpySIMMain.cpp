@@ -8,16 +8,7 @@
  **************************************************************/
 
 #include "SpySIMMain.h"
-#include <wx/msgdlg.h>
-#include "wx/wx.h"
-#include "wx/sizer.h"
-#include <wx/event.h>
-#include <thread>
-#include <wx/stopwatch.h>
-#include <tgmath.h>
-#include <time.h>
-
-#include <math.h>
+#include "grid.h"
 
 //(*InternalHeaders(SpySIMFrame)
 #include <wx/string.h>
@@ -155,7 +146,14 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
         tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.025);
         call_horiz=5-1;} // 5 *5
 
+    center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
+    center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
+    center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
+    player = new wxRealPoint(*center);
+    player->x += tile_size ;
+    player->y -= tile_size / 4;
     Draw(selection);
+
     // easy     75
     // medium   50
     // hard     25
@@ -170,26 +168,26 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
 
 }
 
-
+int i=0;
 void SpySIMFrame::Draw(int difficulty)
 {
+
     wxClientDC dc(Panel1);
     dc.Clear();
 
-    wxSize panel_size = Panel1->GetClientSize();
-    wxRealPoint *center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
-    wxRealPoint *center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
-    wxRealPoint *center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
 
 
+    Grid floor1;
+    floor1.DrawIsoGrid(*center,RadioBox1,Panel1,tile_size);
+    Grid floor2;
+    floor2.DrawIsoGrid(*center2,RadioBox1,Panel1,tile_size);
+    Grid floor3;
+    floor3.DrawIsoGrid(*center3,RadioBox1,Panel1,tile_size);
 
-    DrawIsoGrid(*center, RadioBox1);
-    DrawIsoGrid(*center2, RadioBox1);
-    DrawIsoGrid(*center3, RadioBox1);
+    if(i==0)
+    dc.DrawCircle(*player, 1);
 
-    player = new wxRealPoint(*center);
-    player->x += tile_size ;
-    player->y -= tile_size / 4;
+
 
     centers= new wxRealPoint[5*call_horiz];
     int stepx=0;
@@ -204,105 +202,10 @@ void SpySIMFrame::Draw(int difficulty)
     }
 
 
-    dc.DrawCircle(*player, 1);
 
 
+i=1;
 
-}
-
-void SpySIMFrame::DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox)
-{
-
-    wxClientDC dc(Panel1);
-    //dc.Clear();
-    wxRealPoint *center = new wxRealPoint(point);
-    DrawIsoRow(*center, RadioBox1->GetSelection());
-
-    wxRealPoint **array = new wxRealPoint*[5];
-
-    for(int i = 0; i < 4; i++){ // define a max number or rows
-        array[i] = new wxRealPoint(*center);    // based on the panel width
-        array[i]->x += (tile_size * cos(PI/6)) * (i + 1);
-        array[i]->y -= (tile_size * 0.5) * (i + 1);
-
-        DrawIsoRow(*array[i], RadioBox->GetSelection());
-    }
-
-
-}
-
-void SpySIMFrame::DrawIsoRow(wxRealPoint& point, int difficulty)
-{
-    wxRealPoint *center = new wxRealPoint(point);
-    DrawIsoSquare(*center);
-
-    num_tiles = 0;
-    if(difficulty == 0)
-        num_tiles = 15;
-    else if(difficulty == 1)
-        num_tiles = 10;
-    else if(difficulty == 2)
-        num_tiles = 5;
-
-    wxRealPoint **array = new wxRealPoint*[num_tiles];
-
-    for(int i = 0; i < num_tiles-1; i++){ // define a max number or rows
-        array[i] = new wxRealPoint(*center);    // based on the panel width
-        array[i]->x += tile_size * (i+1);
-
-        DrawIsoSquare(*array[i]);
-    }
-
-    if(center != NULL){
-        delete center;
-        center = NULL;
-    }
-    if(array != NULL){
-        delete [] array;
-        array = NULL;
-    }
-}
-
-void SpySIMFrame::DrawIsoSquare(wxRealPoint& point)
-{
-    wxClientDC dc(Panel1);
-    dc.SetBrush(*wxBLACK_BRUSH);
-
-    wxSize panel_size = Panel1->GetClientSize();
-    wxRealPoint *center = new wxRealPoint(point);
-    wxRealPoint *slave = new wxRealPoint(*center);
-    slave->x += tile_size;
-    dc.DrawLine(*center,*slave);
-
-    wxRealPoint *center2 = new wxRealPoint(*center);
-    center2->y -= tile_size * 0.5; // 0.5 is sin(30 degrees)
-    center2->x += tile_size * cos(PI/6); // cosine of 30 degrees
-
-    dc.DrawLine(*center,*center2);
-
-    wxRealPoint *center3 = new wxRealPoint(*slave);
-    center3->y -= tile_size * 0.5; // 0.5 is sin(30 degrees)
-    center3->x += tile_size * cos(PI/6); // cosine of 30 degrees
-
-    dc.DrawLine(*slave,*center3);
-    dc.DrawLine(*center2,*center3);
-
-    if(center != NULL){
-        delete center;
-        center = NULL;
-    }
-    if(slave != NULL){
-        delete slave;
-        slave = NULL;
-    }
-    if(center2 != NULL){
-        delete center2;
-        center2 = NULL;
-    }
-    if(center3 != NULL){
-        delete center3;
-        center3 = NULL;
-    }
 }
 
 void SpySIMFrame::KeyMove(wxKeyEvent& event)
@@ -311,14 +214,8 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
     wxClientDC dc(Panel1);
     dc.Clear();
 
-    wxSize panel_size = Panel1->GetClientSize();
-    wxRealPoint *center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
-    wxRealPoint *center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
-    wxRealPoint *center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
 
-    DrawIsoGrid(*center, RadioBox1);
-    DrawIsoGrid(*center2, RadioBox1);
-    DrawIsoGrid(*center3, RadioBox1);
+    Draw(RadioBox1->GetSelection());
 
     switch(event.GetKeyCode()){
         case WXK_LEFT : case WXK_CONTROL_A:

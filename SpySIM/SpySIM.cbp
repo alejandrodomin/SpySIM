@@ -31,6 +31,10 @@
 		<Unit filename="SpySIMApp.h" />
 		<Unit filename="SpySIMMain.cpp" />
 		<Unit filename="SpySIMMain.h" />
+		<Unit filename="cell.cpp" />
+		<Unit filename="cell.h" />
+		<Unit filename="grid.cpp" />
+		<Unit filename="grid.h" />
 		<Unit filename="wxsmith/SpySIMframe.wxs" />
 		<Extensions>
 			<code_completion />

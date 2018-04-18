@@ -1,6 +1,6 @@
 #include "cell.h"
 
-void Cell::DrawIsoSquare(wxRealPoint& point)
+void Cell::DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1,double tile_size)
 {
     wxClientDC dc(Panel1);
     dc.SetBrush(*wxBLACK_BRUSH);
