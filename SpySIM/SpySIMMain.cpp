@@ -183,9 +183,9 @@ void SpySIMFrame::Draw(int difficulty)
 
 
 
-    DrawIsoGrid(*center);
-    DrawIsoGrid(*center2);
-    DrawIsoGrid(*center3);
+    DrawIsoGrid(*center, RadioBox1);
+    DrawIsoGrid(*center2, RadioBox1);
+    DrawIsoGrid(*center3, RadioBox1);
 
     player = new wxRealPoint(*center);
     player->x += tile_size ;
@@ -210,7 +210,7 @@ void SpySIMFrame::Draw(int difficulty)
 
 }
 
-void SpySIMFrame::DrawIsoGrid(wxRealPoint& point)
+void SpySIMFrame::DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox)
 {
 
     wxClientDC dc(Panel1);
@@ -225,7 +225,7 @@ void SpySIMFrame::DrawIsoGrid(wxRealPoint& point)
         array[i]->x += (tile_size * cos(PI/6)) * (i + 1);
         array[i]->y -= (tile_size * 0.5) * (i + 1);
 
-        DrawIsoRow(*array[i], RadioBox1->GetSelection());
+        DrawIsoRow(*array[i], RadioBox->GetSelection());
     }
 
 
@@ -316,9 +316,9 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
     wxRealPoint *center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
     wxRealPoint *center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
 
-    DrawIsoGrid(*center);
-    DrawIsoGrid(*center2);
-    DrawIsoGrid(*center3);
+    DrawIsoGrid(*center, RadioBox1);
+    DrawIsoGrid(*center2, RadioBox1);
+    DrawIsoGrid(*center3, RadioBox1);
 
     switch(event.GetKeyCode()){
         case WXK_LEFT : case WXK_CONTROL_A:

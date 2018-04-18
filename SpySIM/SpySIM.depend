@@ -1681,3 +1681,34 @@
 	<wx/string.h>
 	<wx/intl.h>
 
+1523931471 source:c:\users\cooldude101\documents\spysim\spysim\spysimapp.cpp
+	"SpySIMApp.h"
+	"SpySIMMain.h"
+	<wx/image.h>
+
+1523931471 c:\users\cooldude101\documents\spysim\spysim\spysimapp.h
+	<wx/app.h>
+
+1524014748 c:\users\cooldude101\documents\spysim\spysim\spysimmain.h
+	<wx/button.h>
+	<wx/menu.h>
+	<wx/panel.h>
+	<wx/statusbr.h>
+	<wx/frame.h>
+	<wx/stattext.h>
+	<wx/radiobox.h>
+
+1524014747 source:c:\users\cooldude101\documents\spysim\spysim\spysimmain.cpp
+	"SpySIMMain.h"
+	<wx/msgdlg.h>
+	"wx/wx.h"
+	"wx/sizer.h"
+	<wx/event.h>
+	<thread>
+	<wx/stopwatch.h>
+	<tgmath.h>
+	<time.h>
+	<math.h>
+	<wx/string.h>
+	<wx/intl.h>
+
