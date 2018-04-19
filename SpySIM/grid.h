@@ -8,9 +8,10 @@ class Grid : public Cell{
     private:
         wxRealPoint *tru_center;
     protected:
-        void DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1,double tile_size);
+        void DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1);
     public:
-        void DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox, wxPanel *Panel1,double tile_size);
+        Grid(double tile ) ;
+        void DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox, wxPanel *Panel1);
         std::vector<wxRealPoint*> tiles;
 };
 

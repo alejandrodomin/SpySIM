@@ -1,9 +1,13 @@
 #include "grid.h"
 
-void Grid::DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1,double tile_size)
+Grid::Grid(double tile): Cell(tile_size){
+    tile_size=tile;
+
+}
+void Grid::DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1)
 {
     wxRealPoint *center = new wxRealPoint(point);
-    DrawIsoSquare(*center,Panel1, tile_size);
+    DrawIsoSquare(*center,Panel1);
 
     int num_tiles = 0;
     if(difficulty == 0)
@@ -19,7 +23,7 @@ void Grid::DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1,double
         array[i] = new wxRealPoint(*center);    // based on the panel width
         array[i]->x += tile_size * (i+1);
 
-        DrawIsoSquare(*array[i],Panel1, tile_size);
+        DrawIsoSquare(*array[i],Panel1);
     }
 
     if(center != NULL){
@@ -32,12 +36,12 @@ void Grid::DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1,double
     }
 }
 
-void Grid::DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox, wxPanel *Panel1,double tile_size){
+void Grid::DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox, wxPanel *Panel1){
 
     wxClientDC dc(Panel1);
     //dc.Clear();
     wxRealPoint *center = new wxRealPoint(point);
-    DrawIsoRow(*center, RadioBox->GetSelection(),Panel1, tile_size);
+    DrawIsoRow(*center, RadioBox->GetSelection(),Panel1);
 
     wxRealPoint **array = new wxRealPoint*[5];
 
@@ -46,6 +50,6 @@ void Grid::DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox, wxPanel *Panel1
         array[i]->x += (tile_size * cos(PI/6)) * (i + 1);
         array[i]->y -= (tile_size * 0.5) * (i + 1);
 
-        DrawIsoRow(*array[i], RadioBox->GetSelection(),Panel1, tile_size);
+        DrawIsoRow(*array[i], RadioBox->GetSelection(),Panel1);
     }
 }

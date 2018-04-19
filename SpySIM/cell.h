@@ -9,8 +9,11 @@ class Cell{
 
     protected:
     public:
+        double tile_size;
+        Cell();
+        Cell(double tile);
         wxRealPoint* loc;
-        wxRealPoint DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1,double tile_size);
+        wxRealPoint DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1);
 };
 
 #endif

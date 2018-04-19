@@ -177,12 +177,12 @@ void SpySIMFrame::Draw(int difficulty)
 
 
 
-    Grid floor1;
-    floor1.DrawIsoGrid(*center,RadioBox1,Panel1,tile_size);
-    Grid floor2;
-    floor2.DrawIsoGrid(*center2,RadioBox1,Panel1,tile_size);
-    Grid floor3;
-    floor3.DrawIsoGrid(*center3,RadioBox1,Panel1,tile_size);
+    Grid floor1(tile_size);
+    floor1.DrawIsoGrid(*center,RadioBox1,Panel1);
+    Grid floor2(tile_size);
+    floor2.DrawIsoGrid(*center2,RadioBox1,Panel1);
+    Grid floor3(tile_size);
+    floor3.DrawIsoGrid(*center3,RadioBox1,Panel1);
 
     if(i==0)
     dc.DrawCircle(*player, 1);

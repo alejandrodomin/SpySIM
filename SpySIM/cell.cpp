@@ -1,9 +1,13 @@
 #include "cell.h"
 
+Cell::Cell(){}
+Cell::Cell(double tile){
+    tile_size=tile;
+
+}
 
 
-
-wxRealPoint Cell::DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1,double tile_size)
+wxRealPoint Cell::DrawIsoSquare(wxRealPoint& point, wxPanel *Panel1)
 {
     wxClientDC dc(Panel1);
     dc.SetBrush(*wxBLACK_BRUSH);
