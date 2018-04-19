@@ -181,15 +181,30 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
     skel = new AI(*center, tile_size, call_horiz);
     skel->DrawActor(Panel1);
 
+    wxRealPoint ladd = *center;
+
+    int difficulty = RadioBox1->GetSelection();
+    int num_tiles = 0;
+    if(difficulty == 0)
+        num_tiles = 15;
+    else if(difficulty == 1)
+        num_tiles = 10;
+    else if(difficulty == 2)
+        num_tiles = 5;
+
+    ladd.x += ((num_tiles - 1) * tile_size) + (tile_size / 2);
+    ladd.y -= (4 * (tile_size / 2)) - (tile_size / 2);
+
+    lad = new Ladder(ladd, tile_size);
+    lad->DrawLadder(Panel1);
+
 
 //    AI *bobby = new AI();
 //    bobby->DrawActor(Panel1);
 }
 
-int i=0;
 void SpySIMFrame::Draw(int difficulty)
 {
-
     wxClientDC dc(Panel1);
     dc.Clear();
 
@@ -201,14 +216,6 @@ void SpySIMFrame::Draw(int difficulty)
     floor2.DrawIsoGrid(*center2,RadioBox1,Panel1);
     Grid floor3(tile_size);
     floor3.DrawIsoGrid(*center3,RadioBox1,Panel1);
-
-    if(i==0)
-        dc.DrawCircle(*player, 1);
-
-
-
-    i=1;
-
 }
 
 void SpySIMFrame::KeyMove(wxKeyEvent& event)
@@ -248,9 +255,28 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
             break;
         }
 
+        if((((bob->loc->x - lad->loc->x) < 3.0) && ((bob->loc->x - lad->loc->x) > -3.0))
+            && (((bob->loc->y - lad->loc->y) < 3.0) && ((bob->loc->y - lad->loc->y) > -3.0)))
+        {
+            bob = new Player(*center2, tile_size, call_horiz);
+
+            int difficulty = RadioBox1->GetSelection();
+            int num_tiles = 0;
+            if(difficulty == 0)
+                num_tiles = 15;
+            else if(difficulty == 1)
+                num_tiles = 10;
+            else if(difficulty == 2)
+                num_tiles = 5;
+
+            bob->loc->x += (num_tiles * tile_size);
+            bob->loc->y -= num_tiles * (tile_size / 8);
+        }
+
         dc.SetBrush(*wxGREEN_BRUSH);
         bob->DrawActor(Panel1);
         skel->DrawActor(Panel1);
+        lad->DrawLadder(Panel1);
     }
 }
 
@@ -279,34 +305,25 @@ void SpySIMFrame::AImove()
         {
         case 0:
             skel->moveLeft();
-            dc.Clear();
-            Draw(RadioBox1->GetSelection());
-            bob->DrawActor(Panel1);
-            skel->DrawActor(Panel1);
             break;
         case 1:
             skel->moveRight();
-            dc.Clear();
-            Draw(RadioBox1->GetSelection());
-            bob->DrawActor(Panel1);
-            skel->DrawActor(Panel1);
             break;
         case 2:
             skel->moveUp();
-            dc.Clear();
-            Draw(RadioBox1->GetSelection());
-            bob->DrawActor(Panel1);
-            skel->DrawActor(Panel1);
             break;
         case 3:
             skel->moveDown();
-            dc.Clear();
-            Draw(RadioBox1->GetSelection());
-            bob->DrawActor(Panel1);
-            skel->DrawActor(Panel1);
             break;
 
         }
+
+
+        dc.Clear();
+        Draw(RadioBox1->GetSelection());
+        bob->DrawActor(Panel1);
+        skel->DrawActor(Panel1);
+        lad->DrawLadder(Panel1);
     }
 
 

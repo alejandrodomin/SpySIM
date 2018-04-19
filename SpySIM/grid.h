@@ -14,7 +14,8 @@ class Grid : public Cell{
     public:
         Grid(double tile ) ;
         void DrawIsoGrid(wxRealPoint& point, wxRadioBox* RadioBox, wxPanel *Panel1);
-        std::vector<wxRealPoint*> tiles;
+
+        wxRealPoint ***tiles;
 };
 
 #endif

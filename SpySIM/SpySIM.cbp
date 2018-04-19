@@ -39,6 +39,9 @@
 		<Unit filename="cell.h" />
 		<Unit filename="grid.cpp" />
 		<Unit filename="grid.h" />
+		<Unit filename="ladder.cpp" />
+		<Unit filename="ladder.h" />
+		<Unit filename="ladder.png" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="wxsmith/SpySIMframe.wxs" />

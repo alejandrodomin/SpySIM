@@ -1,9 +1,9 @@
 #include "ai.h"
 
 AI::AI(wxRealPoint location,double tile_size, int call_horiz): Actor(tile_size, call_horiz){
-    loc = new wxRealPoint(0,0);
     loc->x = location.x;
     loc->y = location.y;
+
     ai_pic = new wxBitmap();
     ai_pic->LoadFile(_("./ai.png"),wxBITMAP_TYPE_PNG);
 }

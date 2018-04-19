@@ -24,6 +24,7 @@
 
 #include "player.h"
 #include "ai.h"
+#include "ladder.h"
 
 
 //(*Headers(SpySIMFrame)
@@ -91,6 +92,7 @@ class SpySIMFrame: public wxFrame
 
         Player *bob;
         AI *skel;
+        Ladder *lad;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;

@@ -2,7 +2,6 @@
 
 Grid::Grid(double tile): Cell(tile_size){
     tile_size=tile;
-
 }
 void Grid::DrawIsoRow(wxRealPoint& point, int difficulty, wxPanel *Panel1)
 {
