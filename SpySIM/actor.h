@@ -5,10 +5,16 @@
 
 class Actor: public Grid
 {
-
 public:
     Actor();
     virtual ~Actor();
+
+    virtual void DrawActor()=0;
+
+    bool moveLeft();
+    bool moveRight();
+    bool moveUp();
+    bool moveDown();
 
 private:
 protected:
