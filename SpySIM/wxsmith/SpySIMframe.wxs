@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxFrame" name="SpySIMFrame">
-		<size>534,397</size>
+		<size>833,397</size>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
 			<label>Play</label>
-			<pos>432,344</pos>
+			<pos>432,600</pos>
 			<handler function="OnButton1Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
 			<pos>0,0</pos>
-			<size>288,296</size>
+			<size>600,500</size>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Timer: </label>
-			<pos>312,72</pos>
+			<pos>616,64</pos>
 			<size>200,17</size>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 			<label>Current Floor: </label>
-			<pos>312,104</pos>
+			<pos>616,96</pos>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 			<label>Score: </label>
-			<pos>320,136</pos>
+			<pos>616,120</pos>
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 			<label>How to Play:</label>
-			<pos>320,168</pos>
+			<pos>624,160</pos>
 			<size>176,144</size>
 		</object>
 		<object class="wxPanel" name="ID_PANEL2" variable="Panel2" member="yes">
-			<pos>0,328</pos>
+			<pos>0,600</pos>
 			<size>368,64</size>
 			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
 				<label>Stats go in here</label>
@@ -45,7 +45,7 @@
 				<item>Hard</item>
 			</content>
 			<default>-1</default>
-			<pos>312,8</pos>
+			<pos>616,8</pos>
 			<handler function="OnRadioBox1Select" entry="EVT_RADIOBOX" />
 		</object>
 		<object class="wxMenuBar" variable="MenuBar1" member="no">

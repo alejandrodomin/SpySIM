@@ -9,7 +9,7 @@
 class Player: public Actor
 {
     public:
-        Player();
+        Player(wxRealPoint location, double tile_size, int call_horiz);
         ~Player();
 
         virtual void DrawActor(wxPanel *panel);

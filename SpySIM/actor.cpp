@@ -1,9 +1,8 @@
 #include "actor.h"
 
-Actor::Actor():Grid(tile_size)
+Actor::Actor(double tile_size, int call_horiz):Grid(tile_size)
 {
-
-
+    this->call_horiz = call_horiz;
 }
 
 bool Actor::moveLeft()

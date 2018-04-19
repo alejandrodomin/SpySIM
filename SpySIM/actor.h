@@ -6,7 +6,7 @@
 class Actor: public Grid
 {
 public:
-    Actor();
+    Actor(double tile_size, int call_horiz);
 
     virtual ~Actor();
 

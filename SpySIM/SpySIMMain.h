@@ -23,6 +23,7 @@
 #include <math.h>
 
 #include "player.h"
+#include "ai.h"
 
 
 //(*Headers(SpySIMFrame)
@@ -86,6 +87,8 @@ class SpySIMFrame: public wxFrame
         int call_horiz;
         wxRealPoint *player;
         wxRealPoint **centers;
+
+        Player *bob;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;

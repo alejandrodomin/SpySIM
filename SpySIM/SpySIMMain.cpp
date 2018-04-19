@@ -72,22 +72,22 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     wxMenu* Menu2;
 
     Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
-    SetClientSize(wxSize(534,397));
-    Button1 = new wxButton(this, ID_BUTTON1, _("Play"), wxRealPoint(432,344), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    Panel1 = new wxPanel(this, ID_PANEL1, wxRealPoint(0,0), wxSize(288,296), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer: "), wxRealPoint(312,72), wxSize(72,17), 0, _T("ID_STATICTEXT1"));
-    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxRealPoint(312,104), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Score: "), wxRealPoint(320,136), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("How to Play:"), wxRealPoint(320,168), wxSize(176,144), 0, _T("ID_STATICTEXT4"));
-    Panel2 = new wxPanel(this, ID_PANEL2, wxRealPoint(0,328), wxSize(368,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
-    StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxRealPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    SetClientSize(wxSize(833,397));
+    Button1 = new wxButton(this, ID_BUTTON1, _("Play"), wxPoint(432,600), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(0,0), wxSize(600,500), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer: "), wxPoint(616,64), wxSize(200,17), 0, _T("ID_STATICTEXT1"));
+    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxPoint(616,96), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Score: "), wxPoint(616,120), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("How to Play:"), wxPoint(624,160), wxSize(176,144), 0, _T("ID_STATICTEXT4"));
+    Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,600), wxSize(368,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
+    StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     wxString __wxRadioBoxChoices_1[3] =
     {
     	_("Easy"),
     	_("Medium"),
     	_("Hard")
     };
-    RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxRealPoint(312,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+    RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxPoint(616,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -109,7 +109,6 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnRadioBox1Select);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnAbout);
-
     //*)
     Panel1->Bind(wxEVT_CHAR_HOOK,&SpySIMFrame::KeyMove, this);
 }
@@ -165,8 +164,11 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
     sw.Start();
     start=true;
 
-    Player *bob = new Player();
+    bob = new Player(*center, tile_size, call_horiz);
     bob->DrawActor(Panel1);
+
+//    AI *bobby = new AI();
+//    bobby->DrawActor(Panel1);
 }
 
 int i=0;
@@ -232,35 +234,21 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
 
     switch(event.GetKeyCode()){
         case WXK_LEFT : case WXK_CONTROL_A:
-            if (call2>0){
-            player->x -= tile_size;
-            call2--;
-            }
+            bob->moveLeft();
             break;
         case WXK_RIGHT : case WXK_CONTROL_D:
-            if (call2<call_horiz){
-            player->x += tile_size;
-            call2++;
-            }
+            bob->moveRight();
             break;
         case WXK_UP : case WXK_CONTROL_W:
-            if (call<4){
-            player->x += yHoriz;
-            player->y -= yVert;
-            call++;
-            }
+            bob->moveUp();
             break;
         case WXK_DOWN : case WXK_CONTROL_S:
-            if (call>0){
-            player->x -= yHoriz;
-            player->y += yVert;
-            call--;
-            }
+            bob->moveDown();
             break;
     }
 
     dc.SetBrush(*wxGREEN_BRUSH);
-    dc.DrawCircle(*player, 1);
+    bob->DrawActor(Panel1);
     }
 }
 

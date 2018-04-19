@@ -1,9 +1,9 @@
 #include "cell.h"
 
 Cell::Cell(){}
+
 Cell::Cell(double tile){
     tile_size=tile;
-
 }
 
 

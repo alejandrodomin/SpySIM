@@ -1,8 +1,8 @@
 #include "ai.h"
 
-AI::AI(){
+AI::AI(double tile_size, int call_horiz): Actor(tile_size, call_horiz){
     ai_pic = new wxBitmap();
-    ai_pic->LoadFile(_("/home/fiu/SpySIM/SpySIM/ai.png"),wxBITMAP_TYPE_PNG);
+    ai_pic->LoadFile(_("./ai.png"),wxBITMAP_TYPE_PNG);
 }
 
 AI::~AI(){
@@ -10,5 +10,5 @@ AI::~AI(){
 
 void AI::DrawActor(wxPanel *panel){
     wxClientDC dc(panel);
-    dc.DrawBitmap(*ai_pic, 50, 50, false);
+    dc.DrawBitmap(*ai_pic, 100, 100, false);
 }

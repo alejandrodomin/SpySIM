@@ -9,7 +9,7 @@
 class AI: public Actor
 {
     public:
-        AI();
+        AI(double tile_size, int call_horiz);
         ~AI();
 
         virtual void DrawActor(wxPanel *panel);

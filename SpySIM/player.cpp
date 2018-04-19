@@ -1,8 +1,12 @@
 #include "player.h"
 
-Player::Player(){
+Player::Player(wxRealPoint location, double tile_size, int call_horiz): Actor(tile_size, call_horiz){
+    loc = new wxRealPoint(0,0);
+    loc->x = location.x;
+    loc->y = location.y;
+
     player_pic = new wxBitmap();
-    player_pic->LoadFile(_("/home/fiu/SpySIM/SpySIM/player.png"),wxBITMAP_TYPE_PNG);
+    player_pic->LoadFile(_("./player.png"),wxBITMAP_TYPE_PNG);
 }
 
 Player::~Player(){
@@ -10,7 +14,5 @@ Player::~Player(){
 
 void Player::DrawActor(wxPanel *panel){
     wxClientDC dc(panel);
-    player_pic->SetHeight(10);
-    player_pic->SetWidth(10);
-    dc.DrawBitmap(*player_pic, 50, 50, false);
+    dc.DrawBitmap(*player_pic, loc->x + (tile_size / 2), loc->y - 20 - (tile_size/4), false);
 }
