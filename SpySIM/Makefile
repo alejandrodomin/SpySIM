@@ -5,6 +5,8 @@ INC = ./
 LFLAGS = $(shell wx-config --libs all)
 CFLAGS = $(shell wx-config --cxxflags) -std=c++11
 
+DEBUG = -g
+
 PROJ = SpySIM
 
 SOURCES := $(wildcard *.cpp)
@@ -14,7 +16,7 @@ $(PROJ): $(OBJECTS)
 	$(CC) $^ $(LFLAGS) -o $@
 
 %.o: %.cpp %.h
-	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
+	$(CC) $(DEBUG) $(CFLAGS) -I$(INC) -c $< -o $@
 
 clean:
 	rm $(OBJECTS) $(PROJ)

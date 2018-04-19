@@ -1,6 +1,7 @@
 #include "ai.h"
 
 AI::AI(){
+    ai_pic = new wxBitmap();
     ai_pic->LoadFile(_("/home/fiu/SpySIM/SpySIM/ai.png"),wxBITMAP_TYPE_PNG);
 }
 
