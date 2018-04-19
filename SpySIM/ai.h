@@ -9,10 +9,11 @@
 class AI: public Actor
 {
     public:
-        AI(double tile_size, int call_horiz);
+        AI(wxRealPoint location,double tile_size, int call_horiz);
         ~AI();
 
         virtual void DrawActor(wxPanel *panel);
+
     protected:
     private:
         wxBitmap *ai_pic;

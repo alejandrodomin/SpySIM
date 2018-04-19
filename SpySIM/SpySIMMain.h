@@ -19,7 +19,7 @@
 #include <wx/stopwatch.h>
 #include <tgmath.h>
 #include <time.h>
-
+#include <wx/timer.h>
 #include <math.h>
 
 #include "player.h"
@@ -45,6 +45,7 @@ class SpySIMFrame: public wxFrame
         void OnIdle(wxIdleEvent& event);
         double tile_size;
         int num_tiles;
+        void AImove();
 
     private:
 
@@ -89,6 +90,7 @@ class SpySIMFrame: public wxFrame
         wxRealPoint **centers;
 
         Player *bob;
+        AI *skel;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;

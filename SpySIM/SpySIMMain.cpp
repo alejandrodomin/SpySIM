@@ -16,8 +16,10 @@
 //*)
 
 //helper functions
-enum wxbuildinfoformat {
-    short_f, long_f };
+enum wxbuildinfoformat
+{
+    short_f, long_f
+};
 
 wxString wxbuildinfo(wxbuildinfoformat format)
 {
@@ -83,9 +85,9 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     wxString __wxRadioBoxChoices_1[3] =
     {
-    	_("Easy"),
-    	_("Medium"),
-    	_("Hard")
+        _("Easy"),
+        _("Medium"),
+        _("Hard")
     };
     RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxPoint(616,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
     MenuBar1 = new wxMenuBar();
@@ -135,15 +137,21 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
     wxSize panel_size = Panel1->GetClientSize();
     int selection = RadioBox1->GetSelection();
 
-    if(selection == 0){
+    if(selection == 0)
+    {
         tile_size = panel_size.GetWidth() / (15 + panel_size.GetWidth()*0.025);
-        call_horiz=15-1;}// 15 *5
-    else if(selection == 1){
+        call_horiz=15-1;
+    }// 15 *5
+    else if(selection == 1)
+    {
         tile_size = panel_size.GetWidth() / (10 + panel_size.GetWidth()*0.025);
-        call_horiz=10-1;} // 10 *5
-    else if(selection == 2){
+        call_horiz=10-1;
+    } // 10 *5
+    else if(selection == 2)
+    {
         tile_size = panel_size.GetWidth() / (5 + panel_size.GetWidth()*0.025);
-        call_horiz=5-1;} // 5 *5
+        call_horiz=5-1;
+    } // 5 *5
 
     center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
     center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
@@ -158,14 +166,21 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
     // hard     25
 }
 wxStopWatch sw;
+
 bool start=false;
+void AImove();
 void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
 {
     sw.Start();
+
     start=true;
 
     bob = new Player(*center, tile_size, call_horiz);
     bob->DrawActor(Panel1);
+
+    skel = new AI(*center, tile_size, call_horiz);
+    skel->DrawActor(Panel1);
+
 
 //    AI *bobby = new AI();
 //    bobby->DrawActor(Panel1);
@@ -188,35 +203,11 @@ void SpySIMFrame::Draw(int difficulty)
     floor3.DrawIsoGrid(*center3,RadioBox1,Panel1);
 
     if(i==0)
-    dc.DrawCircle(*player, 1);
+        dc.DrawCircle(*player, 1);
 
 
-/*
-    centers= new wxRealPoint*[5];
-    int stepx=0;
-    int stepy=0;
-    for (int i=1; i<5;i++){
-            centers [i-1]=new wxRealPoint[5];
-        for (int j=1;j<5;j++){
-                centers[i-1][j-1].x=center->x+(tile_size*j);
-                centers[i-1][j-1].y=center->y+(tile_size/4);
-        }
-        stepx+=tile_size/(1/cos(PI/6));
-        stepy-=tile_size / 2;
-    }
 
-
-/*
-
-        centers[i+j-2].x=center->x+(tile_size*j)+stepx;
-        centers[i+j-2].y=center->y- (tile_size / 4)+stepy;
-
-        stepx+=tile_size/(1/cos(PI/6));
-        stepy-=tile_size / 2;
-
-*/
-
-i=1;
+    i=1;
 
 }
 
@@ -225,58 +216,119 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
     double yVert = tile_size / 2;
     double yHoriz = tile_size/(1/cos(PI/6));
 
-    if (start){
-    wxClientDC dc(Panel1);
-    dc.Clear();
+    if (start)
+    {
+        wxClientDC dc(Panel1);
+        dc.Clear();
 
 
-    Draw(RadioBox1->GetSelection());
+        Draw(RadioBox1->GetSelection());
 
-    switch(event.GetKeyCode()){
-        case WXK_LEFT : case WXK_CONTROL_A:
+        switch(event.GetKeyCode())
+        {
+        case WXK_LEFT :
+        case WXK_CONTROL_A:
             bob->moveLeft();
+
             break;
-        case WXK_RIGHT : case WXK_CONTROL_D:
+        case WXK_RIGHT :
+        case WXK_CONTROL_D:
             bob->moveRight();
+
             break;
-        case WXK_UP : case WXK_CONTROL_W:
+        case WXK_UP :
+        case WXK_CONTROL_W:
             bob->moveUp();
+
             break;
-        case WXK_DOWN : case WXK_CONTROL_S:
+        case WXK_DOWN :
+        case WXK_CONTROL_S:
             bob->moveDown();
+
             break;
-    }
+        }
 
-    dc.SetBrush(*wxGREEN_BRUSH);
-    bob->DrawActor(Panel1);
+        dc.SetBrush(*wxGREEN_BRUSH);
+        bob->DrawActor(Panel1);
+        skel->DrawActor(Panel1);
     }
 }
 
-void SpySIMFrame::OnIdle(wxIdleEvent& event){
+void SpySIMFrame::OnIdle(wxIdleEvent& event)
+{
     wxClientDC dc(Panel1);
-    if (start){
-    double timer = (double)sw.Time()/1000;
-    StaticText1->SetLabel(wxString::Format(wxT("Timer: %lf"),timer));
-    srand ( time(NULL) );
-    int Rand = rand() %(5*call_horiz);
-    //dc.DrawCircle(centers[Rand][2], 1);
-    event.Skip();
+    if (start)
+    {
+        double timer = (double)sw.Time()/1000;
+        StaticText1->SetLabel(wxString::Format(wxT("Timer: %lf"),timer));
+        AImove();
+        event.Skip();
     }
+
 
 }
 
-int Score(double time){
+void SpySIMFrame::AImove()
+{
+    wxClientDC dc(Panel1);
+    if((sw.Time()%2000)==0)
+    {
+        srand ( time(NULL) );
+        int nrand= rand()%4;
+        switch(nrand)
+        {
+        case 0:
+            skel->moveLeft();
+            dc.Clear();
+            Draw(RadioBox1->GetSelection());
+            bob->DrawActor(Panel1);
+            skel->DrawActor(Panel1);
+            break;
+        case 1:
+            skel->moveRight();
+            dc.Clear();
+            Draw(RadioBox1->GetSelection());
+            bob->DrawActor(Panel1);
+            skel->DrawActor(Panel1);
+            break;
+        case 2:
+            skel->moveUp();
+            dc.Clear();
+            Draw(RadioBox1->GetSelection());
+            bob->DrawActor(Panel1);
+            skel->DrawActor(Panel1);
+            break;
+        case 3:
+            skel->moveDown();
+            dc.Clear();
+            Draw(RadioBox1->GetSelection());
+            bob->DrawActor(Panel1);
+            skel->DrawActor(Panel1);
+            break;
+
+        }
+    }
+
+
+}
+
+int Score(double time)
+{
     int score;
-    if (time<= 30 ){
+    if (time<= 30 )
+    {
         score=200;
     }
-    else if (time<= 60 ){
+    else if (time<= 60 )
+    {
         score=100;
     }
-    else if (time<= 90 ){
+    else if (time<= 90 )
+    {
         score=50;
     }
-    else {
+    else
+    {
         score=25;
     }
 
