@@ -4,6 +4,7 @@ Cell::Cell(){}
 
 Cell::Cell(double tile){
     tile_size=tile;
+    loc = new wxRealPoint(0,0);
 }
 
 

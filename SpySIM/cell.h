@@ -9,9 +9,6 @@
 
 class Cell{
     private:
-
-
-
     protected:
     public:
         double tile_size;

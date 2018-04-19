@@ -1,7 +1,6 @@
 #include "player.h"
 
 Player::Player(wxRealPoint location, double tile_size, int call_horiz): Actor(tile_size, call_horiz){
-    loc = new wxRealPoint(0,0);
     loc->x = location.x;
     loc->y = location.y;
 
