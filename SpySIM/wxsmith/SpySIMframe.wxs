@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxFrame" name="SpySIMFrame">
-		<size>833,397</size>
+		<size>833,748</size>
 		<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
 			<label>Play</label>
 			<pos>432,600</pos>
@@ -16,7 +16,7 @@
 			<pos>616,64</pos>
 			<size>200,17</size>
 		</object>
-		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="flr_Count" member="yes">
 			<label>Current Floor: </label>
 			<pos>616,96</pos>
 		</object>

@@ -51,3 +51,13 @@ Actor::~Actor()
 
 
 }
+
+int Actor::RetCall()
+{
+    return call;
+}
+
+int Actor::RetCall2()
+{
+        return call2;
+}

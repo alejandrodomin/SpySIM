@@ -63,6 +63,7 @@ class SpySIMFrame: public wxFrame
         void DrawIsoSquare(wxRealPoint& point);
 
         void KeyMove(wxKeyEvent& event);
+        void Teleport(Player, wxRealPoint);
 
 
         //(*Identifiers(SpySIMFrame)
@@ -79,20 +80,21 @@ class SpySIMFrame: public wxFrame
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
-
+        /*
         wxRealPoint *center;
         wxRealPoint *center2;
         wxRealPoint *center3;
-
+        */
+        int floor=0;
         int call=0;
         int call2=0;
         int call_horiz;
         wxRealPoint *player;
-        wxRealPoint **centers;
+        wxRealPoint *centers[3];
 
         Player *bob;
         AI *skel;
-        Ladder *lad;
+        Ladder *lad, *lad2,*lad3;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;
@@ -101,9 +103,9 @@ class SpySIMFrame: public wxFrame
         wxStaticText* StaticText1;
         wxPanel* Panel2;
         wxStaticText* StaticText3;
+        wxStaticText* flr_Count;
         wxStaticText* StaticText4;
         wxStaticText* StaticText5;
-        wxStaticText* StaticText2;
         wxRadioBox* RadioBox1;
         //*)
 

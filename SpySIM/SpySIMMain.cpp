@@ -74,20 +74,20 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     wxMenu* Menu2;
 
     Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
-    SetClientSize(wxSize(833,397));
+    SetClientSize(wxSize(833,748));
     Button1 = new wxButton(this, ID_BUTTON1, _("Play"), wxPoint(432,600), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
     Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(0,0), wxSize(600,500), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
     StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer: "), wxPoint(616,64), wxSize(200,17), 0, _T("ID_STATICTEXT1"));
-    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxPoint(616,96), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    flr_Count = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxPoint(616,96), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
     StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Score: "), wxPoint(616,120), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
     StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("How to Play:"), wxPoint(624,160), wxSize(176,144), 0, _T("ID_STATICTEXT4"));
     Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,600), wxSize(368,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
     StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     wxString __wxRadioBoxChoices_1[3] =
     {
-        _("Easy"),
-        _("Medium"),
-        _("Hard")
+    	_("Easy"),
+    	_("Medium"),
+    	_("Hard")
     };
     RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxPoint(616,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
     MenuBar1 = new wxMenuBar();
@@ -132,6 +132,9 @@ void SpySIMFrame::OnAbout(wxCommandEvent& event)
     wxMessageBox(msg, _("Welcome to..."));
 }
 
+//centers[3];
+
+
 void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
 {
     wxSize panel_size = Panel1->GetClientSize();
@@ -153,10 +156,10 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
         call_horiz=5-1;
     } // 5 *5
 
-    center = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2);
-    center2 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);
-    center3 = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);
-    player = new wxRealPoint(*center3);
+    centers[0] = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/2); //middle center
+    centers[1] = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/4);//top center2
+    centers[2] = new wxRealPoint(panel_size.GetWidth()*0.025,panel_size.GetHeight()/1.3);//bottom  center3
+    player = new wxRealPoint(*centers[1]);
     player->x += tile_size ;
     player->y -= tile_size / 4;
     Draw(selection);
@@ -169,19 +172,24 @@ wxStopWatch sw;
 
 bool start=false;
 void AImove();
+
 void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
 {
     sw.Start();
 
     start=true;
 
-    bob = new Player(*center, tile_size, call_horiz);
+    bob = new Player(*centers[2], tile_size, call_horiz);
     bob->DrawActor(Panel1);
-
-    skel = new AI(*center, tile_size, call_horiz);
+    floor=1;
+    flr_Count->SetLabel(wxString::Format(wxT("Current Floor: %i"),floor));
+    skel = new AI(*centers[1], tile_size, call_horiz);
     skel->DrawActor(Panel1);
 
-    wxRealPoint ladd = *center;
+    wxRealPoint ladd = *centers[0];
+    wxRealPoint ladd2 = *centers[1];
+    wxRealPoint ladd3 = *centers[2];
+
 
     int difficulty = RadioBox1->GetSelection();
     int num_tiles = 0;
@@ -195,8 +203,18 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
     ladd.x += ((num_tiles - 1) * tile_size) + (tile_size / 2);
     ladd.y -= (4 * (tile_size / 2)) - (tile_size / 2);
 
+    ladd2.x += ((num_tiles - 1) * tile_size) + (tile_size / 2);
+    ladd2.y -= (4 * (tile_size / 2)) - (tile_size / 2);
+
+    ladd3.x += ((num_tiles - 1) * tile_size) + (tile_size / 2);
+    ladd3.y -= (4 * (tile_size / 2)) - (tile_size / 2);
+
     lad = new Ladder(ladd, tile_size);
     lad->DrawLadder(Panel1);
+    lad2 = new Ladder(ladd2, tile_size);
+    lad2->DrawLadder(Panel1);
+    lad3 = new Ladder(ladd3, tile_size);
+    lad3->DrawLadder(Panel1);
 
 
 //    AI *bobby = new AI();
@@ -211,11 +229,11 @@ void SpySIMFrame::Draw(int difficulty)
 
 
     Grid floor1(tile_size);
-    floor1.DrawIsoGrid(*center,RadioBox1,Panel1);
+    floor1.DrawIsoGrid(*centers[0],RadioBox1,Panel1);
     Grid floor2(tile_size);
-    floor2.DrawIsoGrid(*center2,RadioBox1,Panel1);
+    floor2.DrawIsoGrid(*centers[1],RadioBox1,Panel1);
     Grid floor3(tile_size);
-    floor3.DrawIsoGrid(*center3,RadioBox1,Panel1);
+    floor3.DrawIsoGrid(*centers[2],RadioBox1,Panel1);
 }
 
 void SpySIMFrame::KeyMove(wxKeyEvent& event)
@@ -256,10 +274,18 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
         }
 
         if((((bob->loc->x - lad->loc->x) < 3.0) && ((bob->loc->x - lad->loc->x) > -3.0))
-            && (((bob->loc->y - lad->loc->y) < 3.0) && ((bob->loc->y - lad->loc->y) > -3.0)))
+            && (((bob->loc->y - lad->loc->y) < 3.0) && ((bob->loc->y - lad->loc->y) > -3.0))
+           ||(((bob->loc->x - lad2->loc->x) < 3.0) && ((bob->loc->x - lad2->loc->x) > -3.0))
+            && (((bob->loc->y - lad2->loc->y) < 3.0) && ((bob->loc->y - lad2->loc->y) > -3.0))
+           ||(((bob->loc->x - lad3->loc->x) < 3.0) && ((bob->loc->x - lad3->loc->x) > -3.0))
+            && (((bob->loc->y - lad3->loc->y) < 3.0) && ((bob->loc->y - lad3->loc->y) > -3.0))) /*IF Player crosses Ladder*/
         {
-            bob = new Player(*center2, tile_size, call_horiz);
 
+            //bob = new Player(*center2, tile_size, call_horiz);
+            //Teleport(*bob,*center2);
+            if(floor==1) Teleport(*bob,*centers[0]);
+            else if(floor==2) Teleport(*bob,*centers[1]);
+            else if(floor==3){floor = 0; Teleport(*bob, *centers[2]); }
             int difficulty = RadioBox1->GetSelection();
             int num_tiles = 0;
             if(difficulty == 0)
@@ -269,16 +295,33 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
             else if(difficulty == 2)
                 num_tiles = 5;
 
-            bob->loc->x += (num_tiles * tile_size);
-            bob->loc->y -= num_tiles * (tile_size / 8);
+            //bob->loc->x += (num_tiles * tile_size);
+            //bob->loc->y -= num_tiles * (tile_size / 8);
         }
 
         dc.SetBrush(*wxGREEN_BRUSH);
         bob->DrawActor(Panel1);
         skel->DrawActor(Panel1);
         lad->DrawLadder(Panel1);
+        lad2->DrawLadder(Panel1);
+        lad3->DrawLadder(Panel1);
     }
 }
+
+
+void SpySIMFrame::Teleport(Player old, wxRealPoint nFloor)
+{
+    floor++;
+    int xmvs = old.RetCall();
+    int ymvs = old.RetCall2();
+    bob = new Player(nFloor, tile_size, call_horiz);
+    for (int i=0;i<ymvs;i++){bob->moveRight();}
+    for (int i=0;i<=xmvs;i++){bob->moveUp();}
+    flr_Count->SetLabel(wxString::Format(wxT("Current Floor: %i"),floor));
+
+}
+
+
 
 void SpySIMFrame::OnIdle(wxIdleEvent& event)
 {
@@ -324,6 +367,8 @@ void SpySIMFrame::AImove()
         bob->DrawActor(Panel1);
         skel->DrawActor(Panel1);
         lad->DrawLadder(Panel1);
+        lad2->DrawLadder(Panel1);
+        lad3->DrawLadder(Panel1);
     }
 
 

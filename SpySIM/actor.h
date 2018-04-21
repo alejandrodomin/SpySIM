@@ -17,6 +17,9 @@ public:
     bool moveUp();
     bool moveDown();
 
+    int RetCall();
+    int RetCall2();
+
 private:
     int call_horiz;
     int call=0;

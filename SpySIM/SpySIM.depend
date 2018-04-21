@@ -140,7 +140,7 @@
 	"wx/msgout.h"
 	<stddef.h>
 
-1520278626 /usr/include/wx-3.0/wx/string.h
+1485352691 /usr/include/wx-3.0/wx/string.h
 	"wx/defs.h"
 	<ctype.h>
 	<stdio.h>
@@ -1939,4 +1939,87 @@
 	<wx/panel.h>
 	<wx/bitmap.h>
 	<wx/bitmap.h>
+
+1524338400 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/actor.cpp
+	"actor.h"
+
+1524338421 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/actor.h
+	"grid.h"
+
+1524336145 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/grid.h
+	"cell.h"
+	<vector>
+	<wx/radiobox.h>
+
+1524336145 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/cell.h
+	<wx/gdicmn.h>
+	<wx/panel.h>
+	<wx/dcclient.h>
+
+1524336145 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/ai.cpp
+	"ai.h"
+
+1524336145 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/ai.h
+	"actor.h"
+	<wx/bitmap.h>
+	<wx/dcclient.h>
+
+1524336145 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/cell.cpp
+	"cell.h"
+
+1524336145 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/grid.cpp
+	"grid.h"
+
+1524336145 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/ladder.cpp
+	"ladder.h"
+
+1524336145 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/ladder.h
+	"grid.h"
+	<wx/panel.h>
+	<wx/bitmap.h>
+	<wx/bitmap.h>
+
+1524336145 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/player.cpp
+	"player.h"
+
+1524336145 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/player.h
+	"actor.h"
+	<wx/bitmap.h>
+	<wx/dcclient.h>
+
+1524336145 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/SpySIMApp.cpp
+	"SpySIMApp.h"
+	"SpySIMMain.h"
+	<wx/image.h>
+
+1524336145 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/SpySIMApp.h
+	<wx/app.h>
+
+1524341852 /home/malek/Documents/Untitled Folder/SpySIM/SpySIM/SpySIMMain.h
+	<wx/msgdlg.h>
+	"wx/wx.h"
+	"wx/sizer.h"
+	<wx/event.h>
+	<thread>
+	<wx/stopwatch.h>
+	<tgmath.h>
+	<time.h>
+	<wx/timer.h>
+	<math.h>
+	"player.h"
+	"ai.h"
+	"ladder.h"
+	<wx/button.h>
+	<wx/menu.h>
+	<wx/panel.h>
+	<wx/statusbr.h>
+	<wx/frame.h>
+	<wx/stattext.h>
+	<wx/radiobox.h>
+
+1524342118 source:/home/malek/Documents/Untitled Folder/SpySIM/SpySIM/SpySIMMain.cpp
+	"SpySIMMain.h"
+	"grid.h"
+	<wx/string.h>
+	<wx/intl.h>
 
