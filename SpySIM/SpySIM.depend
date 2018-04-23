@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1522514201 source:/home/cooldude101/SpySIM/SpySIM/SpySIMApp.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/SpySIMApp.cpp
 	"SpySIMApp.h"
 	"SpySIMMain.h"
 	<wx/image.h>
 
-1522514201 /home/cooldude101/SpySIM/SpySIM/SpySIMApp.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/SpySIMApp.h
 	<wx/app.h>
 
 1485352690 /usr/include/wx-3.0/wx/app.h
@@ -140,7 +140,7 @@
 	"wx/msgout.h"
 	<stddef.h>
 
-1485352691 /usr/include/wx-3.0/wx/string.h
+1520278626 /usr/include/wx-3.0/wx/string.h
 	"wx/defs.h"
 	<ctype.h>
 	<stdio.h>
@@ -580,7 +580,7 @@
 
 1485352692 /usr/include/wx-3.0/wx/gtk/app.h
 
-1524117992 /home/cooldude101/SpySIM/SpySIM/SpySIMMain.h
+1524510659 /home/cooldude101/SpySIM/SpySIM/SpySIMMain.h
 	<wx/msgdlg.h>
 	"wx/wx.h"
 	"wx/sizer.h"
@@ -594,6 +594,7 @@
 	"player.h"
 	"ai.h"
 	"ladder.h"
+	<wx/sizer.h>
 	<wx/button.h>
 	<wx/menu.h>
 	<wx/panel.h>
@@ -1039,7 +1040,7 @@
 	"wx/bitmap.h"
 	"wx/list.h"
 
-1524122799 source:/home/cooldude101/SpySIM/SpySIM/SpySIMMain.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/SpySIMMain.cpp
 	"SpySIMMain.h"
 	"grid.h"
 	<wx/string.h>
@@ -1871,40 +1872,40 @@
 	<wx/bitmap.h>
 	<wx/dcclient.h>
 
-1524111779 source:/home/cooldude101/SpySIM/SpySIM/actor.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/actor.cpp
 	"actor.h"
 
-1524111811 /home/cooldude101/SpySIM/SpySIM/actor.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/actor.h
 	"grid.h"
 
-1524123628 /home/cooldude101/SpySIM/SpySIM/grid.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/grid.h
 	"cell.h"
 	<vector>
 	<wx/radiobox.h>
 
-1524115371 /home/cooldude101/SpySIM/SpySIM/cell.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/cell.h
 	<wx/gdicmn.h>
 	<wx/panel.h>
 	<wx/dcclient.h>
 
-1524118212 source:/home/cooldude101/SpySIM/SpySIM/ai.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/ai.cpp
 	"ai.h"
 
-1524117882 /home/cooldude101/SpySIM/SpySIM/ai.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/ai.h
 	"actor.h"
 	<wx/bitmap.h>
 	<wx/dcclient.h>
 
-1524114599 source:/home/cooldude101/SpySIM/SpySIM/cell.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/cell.cpp
 	"cell.h"
 
-1524107880 source:/home/cooldude101/SpySIM/SpySIM/grid.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/grid.cpp
 	"grid.h"
 
-1524114595 source:/home/cooldude101/SpySIM/SpySIM/player.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/player.cpp
 	"player.h"
 
-1524111863 /home/cooldude101/SpySIM/SpySIM/player.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/player.h
 	"actor.h"
 	<wx/bitmap.h>
 	<wx/dcclient.h>
@@ -1931,10 +1932,10 @@
 1524114587 source:/home/dru/Documents/SpySIM/SpySIM/ai.cpp
 	"ai.h"
 
-1524115631 source:/home/cooldude101/SpySIM/SpySIM/ladder.cpp
+1524508914 source:/home/cooldude101/SpySIM/SpySIM/ladder.cpp
 	"ladder.h"
 
-1524114322 /home/cooldude101/SpySIM/SpySIM/ladder.h
+1524508914 /home/cooldude101/SpySIM/SpySIM/ladder.h
 	"grid.h"
 	<wx/panel.h>
 	<wx/bitmap.h>

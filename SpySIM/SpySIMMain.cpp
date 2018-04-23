@@ -44,15 +44,19 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 }
 
 //(*IdInit(SpySIMFrame)
-const long SpySIMFrame::ID_BUTTON1 = wxNewId();
 const long SpySIMFrame::ID_PANEL1 = wxNewId();
+const long SpySIMFrame::ID_RADIOBOX1 = wxNewId();
 const long SpySIMFrame::ID_STATICTEXT1 = wxNewId();
 const long SpySIMFrame::ID_STATICTEXT2 = wxNewId();
 const long SpySIMFrame::ID_STATICTEXT3 = wxNewId();
 const long SpySIMFrame::ID_STATICTEXT4 = wxNewId();
 const long SpySIMFrame::ID_STATICTEXT5 = wxNewId();
+const long SpySIMFrame::ID_STATICTEXT6 = wxNewId();
 const long SpySIMFrame::ID_PANEL2 = wxNewId();
-const long SpySIMFrame::ID_RADIOBOX1 = wxNewId();
+const long SpySIMFrame::ID_BUTTON1 = wxNewId();
+const long SpySIMFrame::ID_BUTTON2 = wxNewId();
+const long SpySIMFrame::ID_BUTTON3 = wxNewId();
+const long SpySIMFrame::ID_BUTTON4 = wxNewId();
 const long SpySIMFrame::idMenuQuit = wxNewId();
 const long SpySIMFrame::idMenuAbout = wxNewId();
 const long SpySIMFrame::ID_STATUSBAR1 = wxNewId();
@@ -69,27 +73,55 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     //(*Initialize(SpySIMFrame)
     wxMenuItem* MenuItem2;
     wxMenuItem* MenuItem1;
+    wxFlexGridSizer* FlexGridSizer1;
+    wxFlexGridSizer* FlexGridSizer2;
     wxMenu* Menu1;
+    wxFlexGridSizer* FlexGridSizer4;
+    wxFlexGridSizer* FlexGridSizer3;
     wxMenuBar* MenuBar1;
     wxMenu* Menu2;
 
-    Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
-    SetClientSize(wxSize(833,748));
-    Button1 = new wxButton(this, ID_BUTTON1, _("Play"), wxPoint(432,600), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(0,0), wxSize(600,500), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer: "), wxPoint(616,64), wxSize(200,17), 0, _T("ID_STATICTEXT1"));
-    flr_Count = new wxStaticText(this, ID_STATICTEXT2, _("Current Floor: "), wxPoint(616,96), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Score: "), wxPoint(616,120), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("How to Play:"), wxPoint(624,160), wxSize(176,144), 0, _T("ID_STATICTEXT4"));
-    Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(0,600), wxSize(368,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
-    StaticText5 = new wxStaticText(Panel2, ID_STATICTEXT5, _("Stats go in here"), wxPoint(128,32), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
+    FlexGridSizer1 = new wxFlexGridSizer(2, 2, 0, 0);
+    Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxSize(458,354), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
+    FlexGridSizer1->Add(Panel1, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer2 = new wxFlexGridSizer(2, 1, 0, 0);
     wxString __wxRadioBoxChoices_1[3] =
     {
     	_("Easy"),
     	_("Medium"),
     	_("Hard")
     };
-    RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxPoint(616,8), wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+    RadioBox1 = new wxRadioBox(this, ID_RADIOBOX1, _("Difficulty"), wxDefaultPosition, wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+    FlexGridSizer2->Add(RadioBox1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer4 = new wxFlexGridSizer(3, 2, 0, 0);
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Timer:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    FlexGridSizer4->Add(StaticText1, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    FlexGridSizer4->Add(StaticText2, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Floor:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+    FlexGridSizer4->Add(StaticText3, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    flr_Count = new wxStaticText(this, ID_STATICTEXT4, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+    FlexGridSizer4->Add(flr_Count, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("Score:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    FlexGridSizer4->Add(StaticText5, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    StaticText6 = new wxStaticText(this, ID_STATICTEXT6, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+    FlexGridSizer4->Add(StaticText6, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer2->Add(FlexGridSizer4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(FlexGridSizer2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Panel2 = new wxPanel(this, ID_PANEL2, wxDefaultPosition, wxSize(235,81), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
+    FlexGridSizer1->Add(Panel2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer3 = new wxFlexGridSizer(0, 2, 0, 0);
+    Button1 = new wxButton(this, ID_BUTTON1, _("Start"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    FlexGridSizer3->Add(Button1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Button2 = new wxButton(this, ID_BUTTON2, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    FlexGridSizer3->Add(Button2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Button3 = new wxButton(this, ID_BUTTON3, _("Quit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    FlexGridSizer3->Add(Button3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Button4 = new wxButton(this, ID_BUTTON4, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    FlexGridSizer3->Add(Button4, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(FlexGridSizer3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    SetSizer(FlexGridSizer1);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -106,13 +138,17 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
+    FlexGridSizer1->Fit(this);
+    FlexGridSizer1->SetSizeHints(this);
 
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnButton1Click);
     Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnRadioBox1Select);
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnButton1Click);
+    Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnAbout);
     //*)
     Panel1->Bind(wxEVT_CHAR_HOOK,&SpySIMFrame::KeyMove, this);
+    Button1->Enable(false);
 }
 
 SpySIMFrame::~SpySIMFrame()
@@ -164,6 +200,8 @@ void SpySIMFrame::OnRadioBox1Select(wxCommandEvent& event)
     player->y -= tile_size / 4;
     Draw(selection);
 
+    Button1->Enable(true);
+
     // easy     75
     // medium   50
     // hard     25
@@ -182,7 +220,7 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
     bob = new Player(*centers[2], tile_size, call_horiz);
     bob->DrawActor(Panel1);
     floor=1;
-    flr_Count->SetLabel(wxString::Format(wxT("Current Floor: %i"),floor));
+    flr_Count->SetLabel(wxString::Format(wxT("%i"),floor));
     skel = new AI(*centers[1], tile_size, call_horiz);
     skel->DrawActor(Panel1);
 
@@ -317,7 +355,7 @@ void SpySIMFrame::Teleport(Player old, wxRealPoint nFloor)
     bob = new Player(nFloor, tile_size, call_horiz);
     for (int i=0;i<ymvs;i++){bob->moveRight();}
     for (int i=0;i<=xmvs;i++){bob->moveUp();}
-    flr_Count->SetLabel(wxString::Format(wxT("Current Floor: %i"),floor));
+    flr_Count->SetLabel(wxString::Format(wxT("%i"),floor));
 
 }
 
@@ -329,7 +367,7 @@ void SpySIMFrame::OnIdle(wxIdleEvent& event)
     if (start)
     {
         double timer = (double)sw.Time()/1000;
-        StaticText1->SetLabel(wxString::Format(wxT("Timer: %lf"),timer));
+        StaticText2->SetLabel(wxString::Format(wxT("%lf"),timer));
         AImove();
         event.Skip();
     }
