@@ -54,10 +54,11 @@ const long SpySIMFrame::ID_STATICTEXT5 = wxNewId();
 const long SpySIMFrame::ID_STATICTEXT6 = wxNewId();
 const long SpySIMFrame::ID_PANEL2 = wxNewId();
 const long SpySIMFrame::ID_BUTTON1 = wxNewId();
-const long SpySIMFrame::ID_BUTTON2 = wxNewId();
+const long SpySIMFrame::ID_SAVE_BUTTON = wxNewId();
 const long SpySIMFrame::ID_BUTTON3 = wxNewId();
-const long SpySIMFrame::ID_BUTTON4 = wxNewId();
+const long SpySIMFrame::ID_LOAD_BUTTON = wxNewId();
 const long SpySIMFrame::idMenuQuit = wxNewId();
+const long SpySIMFrame::idMenuSave = wxNewId();
 const long SpySIMFrame::idMenuAbout = wxNewId();
 const long SpySIMFrame::ID_STATUSBAR1 = wxNewId();
 //*)
@@ -114,18 +115,20 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer3 = new wxFlexGridSizer(0, 2, 0, 0);
     Button1 = new wxButton(this, ID_BUTTON1, _("Start"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
     FlexGridSizer3->Add(Button1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Button2 = new wxButton(this, ID_BUTTON2, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    FlexGridSizer3->Add(Button2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    SaveButton = new wxButton(this, ID_SAVE_BUTTON, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_SAVE_BUTTON"));
+    FlexGridSizer3->Add(SaveButton, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     Button3 = new wxButton(this, ID_BUTTON3, _("Quit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
     FlexGridSizer3->Add(Button3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Button4 = new wxButton(this, ID_BUTTON4, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    FlexGridSizer3->Add(Button4, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    LoadButton = new wxButton(this, ID_LOAD_BUTTON, _("Load"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_LOAD_BUTTON"));
+    FlexGridSizer3->Add(LoadButton, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer1->Add(FlexGridSizer3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     SetSizer(FlexGridSizer1);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
-    MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
+    MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4, CTRL-W"), _("Quit the application"), wxITEM_NORMAL);
     Menu1->Append(MenuItem1);
+    MenuItem3 = new wxMenuItem(Menu1, idMenuSave, _("Save\tCTRL-S"), _("Saves the application"), wxITEM_NORMAL);
+    Menu1->Append(MenuItem3);
     MenuBar1->Append(Menu1, _("&File"));
     Menu2 = new wxMenu();
     MenuItem2 = new wxMenuItem(Menu2, idMenuAbout, _("About\tF1"), _("Show info about this application"), wxITEM_NORMAL);
@@ -143,8 +146,11 @@ SpySIMFrame::SpySIMFrame(wxWindow* parent,wxWindowID id)
 
     Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnRadioBox1Select);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnButton1Click);
+    Connect(ID_SAVE_BUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnSaveButtonClick);
     Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
+    Connect(ID_LOAD_BUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SpySIMFrame::OnLoadButtonClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnQuit);
+    Connect(idMenuSave,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnSaveButtonClick);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpySIMFrame::OnAbout);
     //*)
     Panel1->Bind(wxEVT_CHAR_HOOK,&SpySIMFrame::KeyMove, this);
@@ -254,7 +260,7 @@ void SpySIMFrame::OnButton1Click(wxCommandEvent& event)
     lad3 = new Ladder(ladd3, tile_size);
     lad3->DrawLadder(Panel1);
 
-
+    LoadButton->Enable(false);
 //    AI *bobby = new AI();
 //    bobby->DrawActor(Panel1);
 }
@@ -344,6 +350,7 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
         lad2->DrawLadder(Panel1);
         lad3->DrawLadder(Panel1);
     }
+    LoadButton->Enable(false);
 }
 
 
@@ -356,7 +363,6 @@ void SpySIMFrame::Teleport(Player old, wxRealPoint nFloor)
     for (int i=0;i<ymvs;i++){bob->moveRight();}
     for (int i=0;i<=xmvs;i++){bob->moveUp();}
     flr_Count->SetLabel(wxString::Format(wxT("%i"),floor));
-
 }
 
 
@@ -371,8 +377,6 @@ void SpySIMFrame::OnIdle(wxIdleEvent& event)
         AImove();
         event.Skip();
     }
-
-
 }
 
 void SpySIMFrame::AImove()
@@ -396,9 +400,7 @@ void SpySIMFrame::AImove()
         case 3:
             skel->moveDown();
             break;
-
         }
-
 
         dc.Clear();
         Draw(RadioBox1->GetSelection());
@@ -408,8 +410,6 @@ void SpySIMFrame::AImove()
         lad2->DrawLadder(Panel1);
         lad3->DrawLadder(Panel1);
     }
-
-
 }
 
 int Score(double time)
@@ -433,8 +433,40 @@ int Score(double time)
     }
 
     return score;
-
-
 }
 
 
+
+void SpySIMFrame::OnSaveButtonClick(wxCommandEvent& event)
+{
+    wxFileDialog saveFileDialog(this, _("Save SPY file"), "", "", "SPY files (*.spy)|*.spy", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    if (saveFileDialog.ShowModal() == wxID_CANCEL)
+        return;     // the user changed idea...
+
+    // save the current contents in the file;
+    // this can be done with e.g. wxWidgets output streams:
+    wxFileOutputStream output_stream(saveFileDialog.GetPath());
+    if (!output_stream.IsOk())
+    {
+        wxLogError("Cannot save current contents in file '%s'.", saveFileDialog.GetPath());
+        return;
+    }
+
+    LoadButton->Enable(true);
+}
+
+void SpySIMFrame::OnLoadButtonClick(wxCommandEvent& event)
+{
+    wxFileDialog openFileDialog(this, _("Open SPY file"), "", "", "SPY files (*.spy)|*.spy", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    if (openFileDialog.ShowModal() == wxID_CANCEL)
+        return;     // the user changed idea...
+
+    // proceed loading the file chosen by the user;
+    // this can be done with e.g. wxWidgets input streams:
+    wxFileInputStream input_stream(openFileDialog.GetPath());
+    if (!input_stream.IsOk())
+    {
+        wxLogError("Cannot open file '%s'.", openFileDialog.GetPath());
+        return;
+    }
+}

@@ -580,7 +580,7 @@
 
 1485352692 /usr/include/wx-3.0/wx/gtk/app.h
 
-1524510659 /home/cooldude101/SpySIM/SpySIM/SpySIMMain.h
+1524516376 /home/cooldude101/SpySIM/SpySIM/SpySIMMain.h
 	<wx/msgdlg.h>
 	"wx/wx.h"
 	"wx/sizer.h"
@@ -602,6 +602,7 @@
 	<wx/frame.h>
 	<wx/stattext.h>
 	<wx/radiobox.h>
+	<wx/wfstream.h>
 
 1485352691 /usr/include/wx-3.0/wx/button.h
 	"wx/defs.h"
@@ -1040,7 +1041,7 @@
 	"wx/bitmap.h"
 	"wx/list.h"
 
-1524508914 source:/home/cooldude101/SpySIM/SpySIM/SpySIMMain.cpp
+1524516353 source:/home/cooldude101/SpySIM/SpySIM/SpySIMMain.cpp
 	"SpySIMMain.h"
 	"grid.h"
 	<wx/string.h>
@@ -2023,4 +2024,19 @@
 	"grid.h"
 	<wx/string.h>
 	<wx/intl.h>
+
+1485352691 /usr/include/wx-3.0/wx/wfstream.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/string.h"
+	"wx/stream.h"
+	"wx/file.h"
+	"wx/ffile.h"
+
+1485352690 /usr/include/wx-3.0/wx/ffile.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/filefn.h"
+	"wx/convauto.h"
+	<stdio.h>
 
