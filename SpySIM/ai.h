@@ -10,6 +10,7 @@ class AI: public Actor
 {
     public:
         AI(wxRealPoint location,double tile_size, int call_horiz);
+        AI(wxRealPoint location,double tile_size, int call_horiz, bool objective);
         ~AI();
 
         virtual void DrawActor(wxPanel *panel);
