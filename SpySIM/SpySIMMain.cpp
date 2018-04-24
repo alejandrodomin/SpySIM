@@ -356,6 +356,8 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
         skel->DrawActor(Panel1);
         skel2->DrawActor(Panel1);
         endgame=skel->View2(bob->loc);
+        if(!endgame)
+            endgame=skel2->View2(bob->loc);
         if(floor > 4)
             wongame=objective->View(bob->loc);
         lad->DrawLadder(Panel1);
