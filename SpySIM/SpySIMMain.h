@@ -67,6 +67,7 @@ class SpySIMFrame: public wxFrame
 
         void KeyMove(wxKeyEvent& event);
         void Teleport(Player, wxRealPoint);
+        void Score(double);
 
 
         //(*Identifiers(SpySIMFrame)
@@ -80,7 +81,9 @@ class SpySIMFrame: public wxFrame
         static const long ID_STATICTEXT6;
         static const long ID_PANEL2;
         static const long ID_BUTTON1;
+        static const long ID_SAVE_BUTTON;
         static const long ID_BUTTON3;
+        static const long ID_LOAD_BUTTON;
         static const long idMenuQuit;
         static const long idMenuSave;
         static const long idMenuAbout;
@@ -95,6 +98,7 @@ class SpySIMFrame: public wxFrame
         int call=0;
         int call2=0;
         int call_horiz;
+        int score=0;
         bool endgame=false;
         bool wongame=false;
         wxRealPoint *player;
@@ -102,12 +106,14 @@ class SpySIMFrame: public wxFrame
 
         Player *bob;
         AI *skel;
+        AI *skel2;
         Ladder *lad, *lad2,*lad3;
         AI *objective;
 
         //(*Declarations(SpySIMFrame)
         wxPanel* Panel1;
         wxStatusBar* StatusBar1;
+        wxButton* SaveButton;
         wxButton* Button1;
         wxButton* Button3;
         wxStaticText* StaticText1;
@@ -115,6 +121,7 @@ class SpySIMFrame: public wxFrame
         wxStaticText* StaticText3;
         wxMenuItem* MenuItem3;
         wxStaticText* flr_Count;
+        wxButton* LoadButton;
         wxStaticText* StaticText5;
         wxStaticText* StaticText2;
         wxRadioBox* RadioBox1;

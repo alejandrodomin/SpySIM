@@ -19,13 +19,15 @@ public:
 
     int RetCall();
     int RetCall2();
+    double yVert = tile_size / 2;
+    double yHoriz = tile_size/(1/cos(PI/6));
+    int call=0;
+    int call2=0;
 
 private:
     int call_horiz;
-    int call=0;
-    int call2=0;
-    double yVert = tile_size / 2;
-    double yHoriz = tile_size/(1/cos(PI/6));
+
+
 protected:
 
 

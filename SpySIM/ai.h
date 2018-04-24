@@ -15,10 +15,12 @@ class AI: public Actor
 
         virtual void DrawActor(wxPanel *panel);
         bool View(wxRealPoint *playerpos);
-
+        bool View2(wxRealPoint *playerpos);
     protected:
     private:
         wxBitmap *ai_pic;
+        wxBitmap * circ;
+        bool drawc=false;
 };
 
 #endif // AI_H
