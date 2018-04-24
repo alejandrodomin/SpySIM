@@ -346,6 +346,7 @@ void SpySIMFrame::KeyMove(wxKeyEvent& event)
         dc.SetBrush(*wxGREEN_BRUSH);
         bob->DrawActor(Panel1);
         skel->DrawActor(Panel1);
+        endgame=skel->View(bob->loc);
         lad->DrawLadder(Panel1);
         lad2->DrawLadder(Panel1);
         lad3->DrawLadder(Panel1);
@@ -369,9 +370,15 @@ void SpySIMFrame::Teleport(Player old, wxRealPoint nFloor)
 
 void SpySIMFrame::OnIdle(wxIdleEvent& event)
 {
+
     wxClientDC dc(Panel1);
     if (start)
     {
+
+        if (endgame){
+            wxMessageBox(_("Finished"));
+            endgame=false;
+        }
         double timer = (double)sw.Time()/1000;
         StaticText2->SetLabel(wxString::Format(wxT("%lf"),timer));
         AImove();
@@ -384,6 +391,7 @@ void SpySIMFrame::AImove()
     wxClientDC dc(Panel1);
     if((sw.Time()%2000)==0)
     {
+
         srand ( time(NULL) );
         int nrand= rand()%4;
         switch(nrand)

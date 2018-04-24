@@ -15,3 +15,13 @@ void AI::DrawActor(wxPanel *panel){
     wxClientDC dc(panel);
     dc.DrawBitmap(*ai_pic, loc->x + (tile_size/2), loc->y - 15 - (tile_size/4), false);
 }
+
+bool AI::View(wxRealPoint *playerpos){
+    bool endgame=false;
+
+    if(playerpos->x-(loc->x+tile_size)<3){
+        endgame=true;
+    }
+    return endgame;
+
+}

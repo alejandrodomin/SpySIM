@@ -13,6 +13,7 @@ class AI: public Actor
         ~AI();
 
         virtual void DrawActor(wxPanel *panel);
+        bool View(wxRealPoint *playerpos);
 
     protected:
     private:

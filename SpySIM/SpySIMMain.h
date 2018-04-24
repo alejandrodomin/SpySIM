@@ -97,6 +97,7 @@ class SpySIMFrame: public wxFrame
         int call=0;
         int call2=0;
         int call_horiz;
+        bool endgame=false;
         wxRealPoint *player;
         wxRealPoint *centers[3];
 
