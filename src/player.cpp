@@ -5,7 +5,7 @@ Player::Player(wxRealPoint location, double tile_size, int call_horiz): Actor(ti
     loc->y = location.y;
 
     player_pic = new wxBitmap();
-    player_pic->LoadFile(_("./player.png"),wxBITMAP_TYPE_PNG);
+    player_pic->LoadFile(_("./assets/player.png"),wxBITMAP_TYPE_PNG);
 }
 
 Player::~Player(){

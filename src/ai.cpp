@@ -11,8 +11,8 @@ AI::AI(wxRealPoint location,double tile_size, int call_horiz): Actor(tile_size, 
     loc->y = location.y-yVert*yrand;
 
     ai_pic = new wxBitmap();
-    ai_pic->LoadFile(_("./ai.png"),wxBITMAP_TYPE_PNG);
-    circ=new wxBitmap(_("./circle.png"),wxBITMAP_TYPE_PNG);
+    ai_pic->LoadFile(_("./assets/ai.png"),wxBITMAP_TYPE_PNG);
+    circ=new wxBitmap(_("./assets/circle.png"),wxBITMAP_TYPE_PNG);
     drawc=true;
 }
 
@@ -21,7 +21,7 @@ AI::AI(wxRealPoint location,double tile_size, int call_horiz, bool objective): A
     loc->y = location.y;
     circ=new wxBitmap();
     ai_pic = new wxBitmap();
-    ai_pic->LoadFile(_("./chest.png"),wxBITMAP_TYPE_PNG);
+    ai_pic->LoadFile(_("./assets/chest.png"),wxBITMAP_TYPE_PNG);
 }
 
 AI::~AI(){

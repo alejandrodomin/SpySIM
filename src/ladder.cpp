@@ -5,7 +5,7 @@ Ladder::Ladder(wxRealPoint location, double tile_size) : Grid(tile_size){
    loc->y = location.y;
 
    ladder_pic = new wxBitmap();
-   ladder_pic->LoadFile(_("./ladder.png"),wxBITMAP_TYPE_PNG);
+   ladder_pic->LoadFile(_("./assets/ladder.png"),wxBITMAP_TYPE_PNG);
 }
 
 Ladder::~Ladder(){
