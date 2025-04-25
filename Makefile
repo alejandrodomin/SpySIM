@@ -19,4 +19,5 @@ $(PROJ): $(OBJECTS)
 	$(CC) $(DEBUG) $(CFLAGS) -I$(INC) -c $< -o $@
 
 clean:
-	rm $(OBJECTS) $(PROJ)
+	-rm -rf obj/ bin/
+	-rm $(OBJECTS) $(PROJ)
